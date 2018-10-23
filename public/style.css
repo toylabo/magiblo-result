@@ -1,0 +1,39 @@
+html,body {
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:50%;
+}
+
+div.result {
+    width:100%;
+    justify-content: space-around;
+    margin:4vh 0;
+}
+
+div.name {
+    display: inline-block;
+}
+
+div.result{
+    display: flex;
+}
+
+div.text {
+    width:14em;
+}
+
+div.overall {
+    position: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    
+}
