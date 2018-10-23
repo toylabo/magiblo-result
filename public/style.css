@@ -2,6 +2,7 @@
 
 html,body {
     width:100%;
+    min-width:540px;
     min-height: 100vh;
     height: auto;
     margin:0;
@@ -187,10 +188,20 @@ div.overall:before{
     #contents{
         width:70vw;
     }
+    div.text{
+        width:7em;
+    }
 }
 
 @media screen and (max-width:980px){
     #contents{
-        width:90vw;
+        width:90%;
+    }
+}
+
+@media screen and (max-width:550px){
+    .image-container img {
+        width:100% !important;
+        height:auto !important;
     }
 }
