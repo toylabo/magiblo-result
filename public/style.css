@@ -2,7 +2,8 @@
 
 html,body {
     width:100%;
-    height: 100%;
+    min-height: 100vh;
+    height: auto;
     margin:0;
     display: flex;
     flex-direction: column;
@@ -14,6 +15,7 @@ html,body {
 #main{
     width:100%;
     height: auto;
+    min-height:100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,8 +54,8 @@ html,body {
     flex-direction: column;
     align-items: center;
     width:50%;
-    height: auto !important; 
-    height: 100%;
+    min-height: 100%;
+    height: auto;
 }
 
 div.result {
@@ -77,6 +79,7 @@ div.result{
     display: flex;
     position: relative;
     width:100%;
+    min-height:13em;
     margin: 40px 0;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 15px;
