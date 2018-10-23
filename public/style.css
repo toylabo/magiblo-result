@@ -1,29 +1,130 @@
+@import url("https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css");
+
 html,body {
     width:100%;
+    height: 100%;
+    margin:0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: "Rounded Mplus 1c";
+    font-size:24px;
+}
+
+#main{
+    width:100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #964A7E;
+    color:#FFFFFF;
+}
+
+#header{
+    width:100%;
+    height: 10vh;
+    position: fixed;
+    background: #3A3839;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+#header img{
+    height: 70%;
+    width:auto;
+    margin:0;
+}
+
+#footer{
+    background-color: #3A3839;
+    width:100%;
+    height:10vh;
 }
 
 #contents {
+    margin-top:15vh;
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     width:50%;
+    height: auto !important; 
+    height: 100%;
 }
 
 div.result {
     width:100%;
     justify-content: space-around;
     margin:4vh 0;
+    align-items: center;
 }
 
 div.name {
     display: inline-block;
+    padding: 0.5em 1em;
+    margin-right: 0.5em;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    border:3px solid #FFFFFF;
+    font-size:36px;
 }
 
 div.result{
     display: flex;
+    position: relative;
+    width:100%;
+    margin: 40px 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    border:3px solid #FFFFFF;
+}
+
+div.result.vr:before{
+    position: absolute;
+    display: block;
+    content: "VR";
+    padding: 0.5em 1.5em;
+    top:-20px;
+    left:-20px;
+    background-color: #36B4C7;
+    border-radius: 15px;
+    border:3px solid #FFFFFF;
+    font-size: 36px;
+}
+
+div.result.two-dim:before{
+    position: absolute;
+    display: block;
+    content: "2D";
+    padding: 0.5em 1.5em;
+    top:-20px;
+    left:-20px;
+    background-color: #E40067;
+    border-radius: 15px;
+    border:3px solid #FFFFFF;
+    font-size: 36px;
+}
+
+div.img-container{
+    position: relative;
+    width:30%;
+    height:300px;
+}
+
+div.message-box{
+    margin-left:0.7em;
+}
+
+p.chara-name{
+    position: absolute;
+    bottom: -8%;
+    font-weight: 900;
+    font-size: 48px;
+    -webkit-text-stroke: 3px #3A3839;
 }
 
 div.text {
@@ -31,9 +132,62 @@ div.text {
 }
 
 div.overall {
+    position: relative;
+    padding:2em 2em;
+    padding-top:4.5em !important;
+    margin: 40px 0;
+    width: calc(100% - 4em);
     position: flex;
     flex-direction: column;
-    width: 100%;
     align-items: center;
-    
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    border:3px solid #FFFFFF;
+}
+div.overall:before{
+    position: absolute;
+    display: block;
+    content: "総合評価";
+    padding: 0.5em 1.5em;
+    top:-20px;
+    left:-20px;
+    background-color: #C4CA00;
+    border-radius: 15px;
+    border:3px solid #FFFFFF;
+    font-size: 36px;
+}
+
+.img-container img{
+    position: absolute;
+    top: 10%;
+    left:3%;
+    width:auto;
+    height:80%;
+}
+
+.button {
+    display: block;
+    padding: 0.5em 2em;
+    background-color: #3A3839;
+    box-shadow: 0px 0.5em 0.5em rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    border: 3px solid #FFFFFF;
+    border-radius: 15px;
+    text-decoration: none;
+}
+
+#enquete{
+    margin:40px;
+}
+
+@media screen and (max-width:1300px){
+    #contents{
+        width:70vw;
+    }
+}
+
+@media screen and (max-width:980px){
+    #contents{
+        width:90vw;
+    }
 }
