@@ -15,7 +15,6 @@ html,body {
 
 #main{
     width:100%;
-
     min-width:540px;
     height: auto;
     min-height:100vh;
@@ -28,6 +27,7 @@ html,body {
 
 #header{
     width:100%;
+    min-width:540px;
     height: 10vh;
     position: fixed;
     background: #3A3839;
