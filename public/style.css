@@ -182,6 +182,7 @@ div.overall:before{
 
 #enquete{
     margin:40px;
+    text-align: center;
 }
 
 @media screen and (max-width:1300px){
@@ -197,11 +198,34 @@ div.overall:before{
     #contents{
         width:90%;
     }
-}
-
-@media screen and (max-width:550px){
+    div.result:before{
+        top:-42px !important;
+        left:-16px;
+    }
+    div.result{
+        margin: 50px 0 !important;
+    }
+    div.result.vr{
+        margin-top:70px !important;
+    }
     .image-container img {
         width:100% !important;
         height:auto !important;
+    }
+    div.name {
+        display: inline-block;
+        padding: 0.3em 0.7em;
+        margin-right: 0.5em;
+        background-color: rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+        border:3px solid #FFFFFF;
+        font-size:30px;
+    }
+    p.chara-name{
+        position: absolute;
+        bottom: -2%;
+        font-weight: 900;
+        font-size: 30px;
+        -webkit-text-stroke: 3px #3A3839;
     }
 }
