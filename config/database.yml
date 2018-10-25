@@ -9,6 +9,4 @@ test:
   database: db/test.db
 
 production:
-  adapter: postgresql
-  encoding: utf-8
-  database: db/production.db
+  url: <%= ENV['DATABASE_URL'] %>

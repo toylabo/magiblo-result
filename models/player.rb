@@ -1,7 +1,11 @@
-ActiveRecord::Base.establish_connection(
-        adapter: 'sqlite3',
-        database: 'model.db'
-    )
+configure :deveropment,:test do
+    ActiveRecord::Base.establish_connection = YAML.load_file('config/database.yml')
+end
+
+configure :production do
+    ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/mydb'
+end
+
 class Player < ActiveRecord::Base 
     validates_presence_of :name
     validates_presence_of :scoreVR
