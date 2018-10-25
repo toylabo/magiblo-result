@@ -56,11 +56,11 @@ post '/qr' do
     @total = @score_VR + @score_2D
     @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total)
     @player.save
-    @url = "https://result-magiblo.herokuapp.com/result/#{player.id}"
+    @url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
     #@url = "localhost:4567/result/#{player.id}"
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :h)
     @png = qr.to_img
-    @path = "public/qr/#{player.id}.png"
+    @path = "public/qr/#{@player.id}.png"
     @png.resize(200,200).save(@path)
     @path
 end
