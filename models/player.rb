@@ -3,7 +3,7 @@ configure :deveropment,:test do
 end
 
 configure :production do
-    ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/mydb'
+    ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 end
 
 class Player < ActiveRecord::Base 
