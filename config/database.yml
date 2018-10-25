@@ -10,5 +10,5 @@ test:
 
 production:
   adapter: postgresql
-  encoding: unicode
-  pool: 5
+  encoding: utf-8
+  database: db/production.db
