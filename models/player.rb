@@ -1,3 +1,5 @@
+require 'sinatra'
+
 configure :deveropment,:test do
     ActiveRecord::Base.establish_connection = YAML.load_file('config/database.yml')
 end
