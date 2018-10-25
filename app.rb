@@ -59,10 +59,11 @@ post '/qr' do
     @url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
     #@url = "localhost:4567/result/#{player.id}"
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :h)
-    @png = qr.to_img
-    @path = "public/qr/#{@player.id}.png"
-    @png.resize(200,200).save(@path)
-    @path
+    @qr = qr.to_img.resize(200,200).to_data_url
+    content_type @qr
+    #@path = "public/qr/#{@player.id}.png"
+    #@png.resize(200,200).save(@path)
+    @qr
 end
 
 get '*' do
