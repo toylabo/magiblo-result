@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script>
+        if(window.innerWidth <= 750){
+            viewport = document.querySelector("meta[name='viewport']").setAttribute("content","width=300, initial-scale="+window.innerWidth/750.0);
+        }
+    </script>
     <title>結果！</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
