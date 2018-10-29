@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'sinatra'
 require 'sinatra/json'
 require 'sinatra/reloader'
@@ -22,10 +24,10 @@ get '/result/:id' do
         begin
             @player = Player.find(params[:id])
         rescue => error
-            error_missing_player
+            @player = nil
         end
 
-        if @player.present?
+        if @player.nil?
             @name = @player.name
             @score_VR = @player.scoreVR
             @score_2D = @player.score2D
@@ -49,6 +51,10 @@ get '/result/:id' do
     end
 end
 
+get '/qr/:id' do
+
+end
+
 post '/qr' do
     @name = params[:name]
     @score_VR = params[:scoreVR].to_i
@@ -56,12 +62,13 @@ post '/qr' do
     @total = @score_VR + @score_2D
     @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total)
     @player.save
-    @url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
-    #@url = "localhost:4567/result/#{player.id}"
-    qr = RQRCode::QRCode.new(@url, :size => 7, :level => :h)
+    #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
+    @url = "localhost:4567/result/#{@player.id}"
+    qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
     @qr = qr.to_img.resize(200,200).to_data_url
-    #@path = "public/qr/#{@player.id}.png"
-    #@png.resize(200,200).save(@path)
+    @path = "public/qr/#{@player.id}.png"
+    @png = qr.to_img
+    @png.save(@path)
     erb:qr
 end
 
