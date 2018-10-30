@@ -85,7 +85,7 @@ post '/qr' do
     @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
     puts @qr_url
     #puts "https://dl.dropboxusercontent.com/s/#{@player.id}.png"
-    erb:qr2
+    #erb:qr2
 end
 
 get '/qr/:id' do
