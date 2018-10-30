@@ -76,7 +76,7 @@ post '/qr' do
     @path = "public/qr/#{@player.id}.png"
     @png = qr.to_img
     @png.save(@path)
-    erb:qr
+    erb:qr2
 end
 
 get '*' do
