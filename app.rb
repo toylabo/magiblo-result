@@ -66,26 +66,30 @@ get ['/qr/recent', '/qr/recent/:id'] do
 end
 
 post '/qr' do
-    @name = params[:name]
-    @score_VR = params[:scoreVR].to_i
-    @score_2D = params[:score2D].to_i
-    @total = @score_VR + @score_2D
-    @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total)
-    @player.save
-    #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
-    #@url = "localhost:4567/result/#{@player.id}"
-    @url = url(@player.id)
-    qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
-    @qr = qr.to_img.resize(600,600)
-    @path = "public/qr/#{@player.id}.png"
-    @qr.save(@path)
-    file_content = IO.read(@path)
-    client.upload "/#{@player.id}.png", file_content, :mode => :overwrite
-    @link = client.create_shared_link_with_settings("/#{@player.id}.png")
-    @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
-    puts @qr_url
-    #puts "https://dl.dropboxusercontent.com/s/#{@player.id}.png"
-    erb:qr2
+    if params[:name].nil? || params[:scoreVR].nil? || params[:score2D].nil?
+        "指定されていないパラメータがあります" 
+    else
+        @name = params[:name]
+        @score_VR = params[:scoreVR].to_i
+        @score_2D = params[:score2D].to_i
+        @total = @score_VR + @score_2D
+        @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total)
+        @player.save
+        #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
+        #@url = "localhost:4567/result/#{@player.id}"
+        @url = url(@player.id)
+        qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
+        @qr = qr.to_img.resize(600,600)
+        @path = "public/qr/#{@player.id}.png"
+        @qr.save(@path)
+        file_content = IO.read(@path)
+        client.upload "/#{@player.id}.png", file_content, :mode => :overwrite
+        @link = client.create_shared_link_with_settings("/#{@player.id}.png")
+        @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
+        puts @qr_url
+        #puts "https://dl.dropboxusercontent.com/s/#{@player.id}.png"
+        erb:qr2
+    end
 end
 
 get '/qr/:id' do
