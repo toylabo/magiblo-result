@@ -9,6 +9,7 @@ require 'rqrcode_png'
 require './models/player.rb'
 require 'date'
 require 'dropbox_api'
+require 'chunky_png'
 
 client = DropboxApi::Client.new('WkeCul5dyEAAAAAAAAAAD2PBfg0VPNVum7vz4ZzxxUXI8_n28llbMPjm4WUcayIN')
 
@@ -71,8 +72,8 @@ post '/qr' do
     @total = @score_VR + @score_2D
     @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total)
     @player.save
-    #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
-    @url = "localhost:4567/result/#{@player.id}"
+    @url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
+    #url = "localhost:4567/result/#{@player.id}"
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
     @qr = qr.to_img.resize(600,600)
     @path = "./public/qr/#{@player.id}.png"
