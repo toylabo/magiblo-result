@@ -78,11 +78,12 @@ post '/qr' do
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
     @qr = qr.to_img.resize(600,600)
     @path = "public/qr/#{@player.id}.png"
-    @qr.save("public/qr/#{@player.id}.png")
+    @qr.save(@path)
     file_content = IO.read(@path)
     client.upload "/#{@player.id}.png", file_content, :mode => :overwrite
     @link = client.create_shared_link_with_settings("/#{@player.id}.png")
     @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
+    puts @qr_url
     #puts "https://dl.dropboxusercontent.com/s/#{@player.id}.png"
     erb:qr2
 end
