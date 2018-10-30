@@ -80,7 +80,7 @@ post '/qr' do
     @path = "public/qr/#{@player.id}.png"
     @qr.save("public/qr/#{@player.id}.png")
     file_content = IO.read(@path)
-    client.upload "/#{@player.id}.png", file_content
+    client.upload "/#{@player.id}.png", file_content, :mode => :overwrite
     @link = client.create_shared_link_with_settings("/#{@player.id}.png")
     @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
     #puts "https://dl.dropboxusercontent.com/s/#{@player.id}.png"
