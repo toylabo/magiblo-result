@@ -10,8 +10,10 @@ require './models/player.rb'
 require 'date'
 require 'dropbox_api'
 require 'chunky_png'
+require 'rack/contrib'
 
 client = DropboxApi::Client.new('WkeCul5dyEAAAAAAAAAAD2PBfg0VPNVum7vz4ZzxxUXI8_n28llbMPjm4WUcayIN')
+use Rack::PostBodyContentTypeParser
 
 get '/' do
     "QRコードから結果を読み取ってください。"

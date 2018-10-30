@@ -11,6 +11,7 @@ gem 'sinatra'
 gem "sinatra-contrib"
 gem 'minitest'
 gem 'rack-test'
+gem 'rack-contrib'
 gem 'activerecord'
 gem 'sinatra-activerecord'
 gem 'sqlite3', group: :development
