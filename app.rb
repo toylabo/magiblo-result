@@ -72,13 +72,14 @@ post '/qr' do
     @total = @score_VR + @score_2D
     @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total)
     @player.save
-    @url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
-    #url = "localhost:4567/result/#{@player.id}"
+    #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
+    #@url = "localhost:4567/result/#{@player.id}"
+    @url = url(@player.id)
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
     @qr = qr.to_img.resize(600,600)
-    @path = "./public/qr/#{@player.id}.png"
-    @qr.save(@path)
-    file_content = IO.read(@path)
+    @path = "public/qr/#{@player.id}.png"
+    @qr.save("public/qr/#{@player.id}.png")
+    file_content = IO.read("public/qr/#{@player.id}.png")
     client.upload "/#{@player.id}.png", file_content
     @link = client.create_shared_link_with_settings("/#{@player.id}.png")
     @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
@@ -102,4 +103,8 @@ helpers do
         "<a href=\"#{url}\">#{text}</a>"
     end
 
+    def url(id)
+        #"https://result-magiblo.herokuapp.com/result/" + id.to_s
+        "localhost:4567/result/" + id.to_s
+    end
 end
