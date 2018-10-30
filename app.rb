@@ -8,6 +8,9 @@ require 'rqrcode'
 require 'rqrcode_png'
 require './models/player.rb'
 require 'date'
+require 'dropbox_api'
+
+client = DropboxApi::Client.new('WkeCul5dyEAAAAAAAAAAD2PBfg0VPNVum7vz4ZzxxUXI8_n28llbMPjm4WUcayIN')
 
 get '/' do
     "QRコードから結果を読み取ってください。"
@@ -72,12 +75,18 @@ post '/qr' do
     #@url = "localhost:4567/result/#{@player.id}"
     @url = url(@player.id)
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
-    @qr = qr.to_img.resize(200,200).to_data_url
+    @qr = qr.to_img.resize(600,600).to_data_url
     @path = "public/qr/#{@player.id}.png"
     @png = qr.to_img
     @png.save(@path)
     #erb:qr
-    send_file(@path)
+    file_content = IO.read(@path)
+    client.upload "/#{@player.id}.png", file_content
+    @link = client.create_shared_link_with_settings("/#{@player.id}.png").url
+    @qr_url = @link.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
+    puts @qr_url
+    #puts "https://dl.dropboxusercontent.com/s/#{@player.id}.png"
+    erb:qr2
 end
 
 get '/qr/:id' do

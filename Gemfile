@@ -18,5 +18,6 @@ gem 'pg', group: :production
 gem 'rqrcode'
 gem 'rqrcode_png'
 gem 'chunky_png'
+gem 'dropbox_api'
 
 gem 'tux'
