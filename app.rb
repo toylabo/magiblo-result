@@ -42,7 +42,7 @@ get '/result/:id' do
             today_players.each.with_index(1) do |player,index|
                 @today_rank = index if @player.id == player.id
             end
-            erb:result
+            erb:index
         else
             error_missing_player
         end
