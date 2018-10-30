@@ -74,16 +74,14 @@ post '/qr' do
     @url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
     #@url = "localhost:4567/result/#{@player.id}"
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
-    @qr = qr.to_img.resize(600,600).to_data_url
+    @qr = qr.to_img.resize(600,600)
     @path = "public/qr/#{@player.id}.png"
-    @png = qr.to_img
-    @png.save(@path)
+    @qr.save(@path)
     #erb:qr
     file_content = IO.read(@path)
     client.upload "/#{@player.id}.png", file_content
-    @link = client.create_shared_link_with_settings("/#{@player.id}.png").url
-    @qr_url = @link.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
-    puts @qr_url
+    @link = client.create_shared_link_with_settings("/#{@player.id}.png")
+    @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
     #puts "https://dl.dropboxusercontent.com/s/#{@player.id}.png"
     erb:qr2
 end
