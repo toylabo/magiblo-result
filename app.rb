@@ -79,7 +79,7 @@ post '/qr' do
     @qr = qr.to_img.resize(600,600)
     @path = "public/qr/#{@player.id}.png"
     @qr.save("public/qr/#{@player.id}.png")
-    file_content = IO.read("public/qr/#{@player.id}.png")
+    file_content = IO.read(@path)
     client.upload "/#{@player.id}.png", file_content
     @link = client.create_shared_link_with_settings("/#{@player.id}.png")
     @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
@@ -104,7 +104,7 @@ helpers do
     end
 
     def url(id)
-        #"https://result-magiblo.herokuapp.com/result/" + id.to_s
-        "localhost:4567/result/" + id.to_s
+        "https://result-magiblo.herokuapp.com/result/" + id.to_s
+        #"localhost:4567/result/" + id.to_s
     end
 end
