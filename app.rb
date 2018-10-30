@@ -76,7 +76,11 @@ post '/qr' do
     @path = "public/qr/#{@player.id}.png"
     @png = qr.to_img
     @png.save(@path)
-    erb:qr2
+    #erb:qr
+    send_file(@path)
+end
+
+get '/qr/:id' do
 end
 
 get '*' do
@@ -94,9 +98,9 @@ helpers do
 
     def url(id)
         if settings.production?
-            "https://result-magiblo.herokuapp.com/result/#{id}"
+            "https://result-magiblo.herokuapp.com/result/" + id.to_s
         else
-            "localhost:4567/result/#{id}"
+            "localhost:4567/result/" + id.to_s
         end
     end
 
