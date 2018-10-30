@@ -75,7 +75,7 @@ post '/qr' do
     #@url = "localhost:4567/result/#{@player.id}"
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
     @qr = qr.to_img.resize(600,600)
-    @path = "public/qr/#{@player.id}.png"
+    @path = "./public/qr/#{@player.id}.png"
     @qr.save(@path)
     #erb:qr
     file_content = IO.read(@path)
