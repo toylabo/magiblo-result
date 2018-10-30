@@ -59,7 +59,7 @@ get ['/qr/recent', '/qr/recent/:id'] do
         params[:id] = 10
     end
     @recent_players = Player.order('updated_at DESC').limit(params[:id])
-    #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
+    @url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
     #@url = "localhost:4567/result/#{@player.id}"
     erb:recent
 end
@@ -71,9 +71,8 @@ post '/qr' do
     @total = @score_VR + @score_2D
     @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total)
     @player.save
-    #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
+    @url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
     #@url = "localhost:4567/result/#{@player.id}"
-    @url = url(@player.id)
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
     @qr = qr.to_img.resize(600,600).to_data_url
     @path = "public/qr/#{@player.id}.png"
@@ -103,14 +102,6 @@ helpers do
 
     def link_to(url, text=url)
         "<a href=\"#{url}\">#{text}</a>"
-    end
-
-    def url(id)
-        if settings.production?
-            "https://result-magiblo.herokuapp.com/result/" + id.to_s
-        else
-            "localhost:4567/result/" + id.to_s
-        end
     end
 
 end
