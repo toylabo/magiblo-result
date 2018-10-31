@@ -43,22 +43,30 @@ html,body {
     margin:0;
 }
 
-#footer{
-    background-color: #3A3839;
-    width:100%;
-    height:10vh;
+#footer {
+	background-color: #3A3839;
+	width: 100vw;
+	height: 10vh;
+	min-height: 3em;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: center;
+}
+#footer p{
+    padding-right: 3em;
 }
 
 #contents {
-    margin-top:6vh;
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    align-items: center;
-    width:50%;
-    min-width:540px;
-    min-height: 100%;
-    height: auto;
+	margin-top: 6vh;
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	min-width: 540px;
+	min-height: 100vh;
+	height: auto;
 }
 
 div.result {
