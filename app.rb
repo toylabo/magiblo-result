@@ -10,6 +10,7 @@ require 'date'
 require 'dropbox_api'
 require 'chunky_png'
 require 'rack/contrib'
+require 'json'
 
 client = DropboxApi::Client.new('WkeCul5dyEAAAAAAAAAAD2PBfg0VPNVum7vz4ZzxxUXI8_n28llbMPjm4WUcayIN')
 use Rack::PostBodyContentTypeParser
@@ -37,13 +38,46 @@ get '/result/:id' do
             @score_VR = @player.scoreVR
             @score_2D = @player.score2D
             @total = @player.total
+
+            json_comments = open('comments.json') do |io|
+                JSON.load(io)
+            end
+
+            if isWin?("vr")
+                @comment_VR = json_comments[charaName("vr")][messages][win]
+            else
+                @comment_VR = json_comments[charaName("vr")][messages][lose]
+            end
+
+            if isWin?("2d")
+                @comment_2D = json_comments[charaName("2d")][messages][win]
+            else
+                @comment_2D = json_comments[charaName("2d")][messages][lose]
+            end
+
+            json_eval = open('eval.json') do |io|
+                JSON.load(io)
+            end
+
+            if isWin?("vr") && isWin?("2d")
+                @eval_messages = json_eval[0]
+            elsif isWin?("vr") && !(isWin?("2d"))
+                @eval_messages = json_eval[1]
+            elsif !(isWin?("vr")) && isWin?("2d")
+                @eval_messages = json_eval[2]
+            elsif !(isWin?("vr")) && !(isWin?("2d"))
+                @eval_messages = json_eval[3]
+            end
+
             today_players = Player.where(updated_at: Date.today.beginning_of_day.to_time..
                                          Date.today.end_of_day.to_time).
                                          order('total DESC')
             @players = Player.order('total DESC')
+
             @players.each.with_index(1) do |player,index| 
                 @all_player_rank = index if @player.id == player.id
             end
+
             today_players.each.with_index(1) do |player,index|
                 @today_rank = index if @player.id == player.id
             end
@@ -74,11 +108,11 @@ post '/qr' do
         @score_VR = params[:scoreVR].to_i
         @score_2D = params[:score2D].to_i
         @total = @score_VR + @score_2D
-        isWin?(VR, params[:isWinVR])
-        isWin?(2D, params[:isWin2D])
-        charaName(VR, params[:charaVR])
-        charaName(2D, params[:chara2D])
-        evaluation(params[:moveCount], @total)
+        isWin?("VR", params[:isWinVR])
+        isWin?("2D", params[:isWin2D])
+        charaName("VR", params[:charaVR])
+        charaName("2D", params[:chara2D])
+        evaluation(params[:moveCount].to_i, @total)
         @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total)
         @player.save
         #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
@@ -115,11 +149,11 @@ helpers do
     end
 
     def url(id)
-        "https://result-magiblo.herokuapp.com/result/" + id.to_s
-        #"localhost:4567/result/" + id.to_s
+        #"https://result-magiblo.herokuapp.com/result/" + id.to_s
+        "localhost:4567/result/" + id.to_s
     end
 
-    def isWin?(side,result)
+    def isWin?(side,result="")
         if side.downcase == "vr"
             @is_win_VR ||= result
         elsif side.downcase == "2d"
@@ -136,28 +170,30 @@ helpers do
     end
 
     def evaluation(move_count,total)
-        if move_count/10 == 0
+        if move_count.div(10) == 0
             @restless_str_count = 1
-        elsif move_count/10 > 5
+        elsif move_count.div(10) > 5
             @restless_str_count = 5
         else
-            @restless_str_count = move_count / 10
+            @restless_str_count = move_count.div(10)
         end
 
+        @restless_str = ""
         @restless_str_count.times do
             @restless_str += "★"
         end
 
         @restless_str += "☆" * (5 - @restless_str_count)
 
-        if total/5 == 0
+        if total.div(5) == 0
             @effort_str_count = 1
-        elsif total/5 > 5
+        elsif total.div(5) > 5
             @effort_str_count = 5            
         else
             @effort_str_count = 5
         end
 
+        @effort_str = ""
         @effort_str_count.times do
             @effort_str += "★"
         end
