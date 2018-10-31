@@ -38,34 +38,47 @@ get '/result/:id' do
             @score_VR = @player.scoreVR
             @score_2D = @player.score2D
             @total = @player.total
+            @is_win_VR = @player.isWinVR
+            @is_win_2D = @player.isWin2D
+            @chara_VR = @player.charaVR
+            @chara_2D = @player.chara2D
+            @restless_str = @player.restlessStr
+            @effort_str = @player.effortStr
 
-            json_comments = open('comments.json') do |io|
+            json_comments = open('./public/comments.json') do |io|
                 JSON.load(io)
             end
 
-            if isWin?("vr")
-                @comment_VR = json_comments[charaName("vr")][messages][win]
+            @chara_VR_JPN = json_comments[@chara_VR]['nameJPN']
+            @chara_2D_JPN = json_comments[@chara_2D]['nameJPN']
+
+            if @is_win_VR
+                @comment_VR = json_comments[@chara_VR]['messages']['win']
+                @result_VR = "win"
             else
-                @comment_VR = json_comments[charaName("vr")][messages][lose]
+                @comment_VR = json_comments[@chara_VR]['messages']['lose']
+                @result_VR = "lose"
             end
 
-            if isWin?("2d")
-                @comment_2D = json_comments[charaName("2d")][messages][win]
+            if @is_win_2D
+                @comment_2D = json_comments[@chara_2D]['messages']['win']
+                @result_2D = "win"
             else
-                @comment_2D = json_comments[charaName("2d")][messages][lose]
+                @comment_2D = json_comments[@chara_2D]['messages']['lose']
+                @result_2D = "lose"
             end
 
-            json_eval = open('eval.json') do |io|
+            json_eval = open('./public/eval.json') do |io|
                 JSON.load(io)
             end
 
-            if isWin?("vr") && isWin?("2d")
+            if @is_win_VR && @is_win_2D
                 @eval_messages = json_eval[0]
-            elsif isWin?("vr") && !(isWin?("2d"))
+            elsif @is_win_VR && !(@is_win_2D)
                 @eval_messages = json_eval[1]
-            elsif !(isWin?("vr")) && isWin?("2d")
+            elsif !(@is_win_VR) && @is_win_2D
                 @eval_messages = json_eval[2]
-            elsif !(isWin?("vr")) && !(isWin?("2d"))
+            elsif !(@is_win_VR) && !(@is_win_2D)
                 @eval_messages = json_eval[3]
             end
 
@@ -108,12 +121,13 @@ post '/qr' do
         @score_VR = params[:scoreVR].to_i
         @score_2D = params[:score2D].to_i
         @total = @score_VR + @score_2D
-        isWin?("VR", params[:isWinVR])
-        isWin?("2D", params[:isWin2D])
-        charaName("VR", params[:charaVR])
-        charaName("2D", params[:chara2D])
+        @is_win_VR = params[:isWinVR]
+        @is_win_2D = params[:isWin2D]
+        @chara_VR = params[:charaVR]
+        @chara_2D = params[:chara2D]
         evaluation(params[:moveCount].to_i, @total)
-        @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total)
+        @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total, isWinVR: @is_win_VR,
+                             isWin2D: @is_win_2D, charaVR: @chara_VR, chara2D: @chara_2D, restlessStr: @restless_str, effortStr: @effort_str)
         @player.save
         #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
         #@url = "localhost:4567/result/#{@player.id}"
@@ -153,23 +167,9 @@ helpers do
         "localhost:4567/result/" + id.to_s
     end
 
-    def isWin?(side,result="")
-        if side.downcase == "vr"
-            @is_win_VR ||= result
-        elsif side.downcase == "2d"
-            @is_win_2D ||= result
-        end
-    end
-
-    def charaName(side,name="")
-        if side.downcase == "vr"
-            @chara_VR ||= name
-        elsif side.downcase == "2d"
-            @chara_2D ||= name
-        end
-    end
 
     def evaluation(move_count,total)
+
         if move_count.div(10) == 0
             @restless_str_count = 1
         elsif move_count.div(10) > 5
@@ -185,12 +185,12 @@ helpers do
 
         @restless_str += "☆" * (5 - @restless_str_count)
 
-        if total.div(5) == 0
+        if total.div(500) == 0
             @effort_str_count = 1
-        elsif total.div(5) > 5
+        elsif total.div(500) > 5
             @effort_str_count = 5            
         else
-            @effort_str_count = 5
+            @effort_str_count = total.div(500)
         end
 
         @effort_str = ""

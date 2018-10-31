@@ -18,30 +18,27 @@
             </div>
             <div class="result vr">
                 <div class="img-container">
-                    <img src="../img/ant.png" alt="アント">
-                    <p class="chara-name">アント</p>
+                    <img src="../img/<%= @chara_VR %>.png" alt="<%= @chara_VR_JPN %>">
                 </div>
                 <div class="text">
-                    Score <%= @score_VR%><br>
-                    結果 win<br>
+                    Score <%= @score_VR %><br>
+                    結果 <%= @result_VR %><br>
                     メッセージ<br>
                     <div class = "message-box">
-                        お疲れ様！
+                        <%= @comment_VR %>
                     </div>
                 </div>
             </div>
             <div class="result two-dim">
                 <div class="img-container">
-                    <img src="../img/peta.png" alt="ペタ">
-                    <p class="chara-name">ペタ</p>
+                    <img src="../img/<%= @chara_2D %>.png" alt="<%= @chara_2D_JPN %>">
                 </div>
                 <div class="text">
                     Score <%= @score_2D %><br>
-                    結果 win<br>
+                    結果 <%= @result_2D %><br>
                     メッセージ<br>
                     <div class ="message-box">
-                        お疲れ様。<br>
-                        また一緒にがんばろ！
+                        <%= @comment_2D %>
                     </div>
                 </div>
             </div>
@@ -53,11 +50,11 @@
                     鳳祭内ランキング　<%= @all_player_rank %>位<br>
                 </div>
                 <div class="eval">
-                    落ち着きのなさ　★★★★☆<br>
-                    頑張り度       ★★★☆☆
+                    落ち着きのなさ　<%= @restless_str %><br>
+                    頑張り度       <%= @effort_str %>
                 </div>
                 <div class="last-message">
-                    2次元での生活をおすすめします！
+                    <%= @eval_messages %>
                 </div>
             </div>
             
@@ -68,7 +65,7 @@
             </div>
         </div>
         <div id="footer">
-            
+            <p>©2018 おもちゃLABO</p>
         </div>
     </div>
 </body>
