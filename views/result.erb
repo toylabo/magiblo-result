@@ -7,7 +7,10 @@
     <title><%= @name %>の結果</title>
 </head>
 <body>
-    <p><%= @name %>さんのスコアは<%= @score %>でした。</p>
-    <p>全員の中で<%= @rank %>位でした！</p>
+    <p><%= @name %>さんのスコアは<%= @total %>でした。</p>
+    <P>VR側:<%=@score_VR%>点</p>
+    <P>2D側:<%=@score_2D%>点</p>
+    <P>鳳祭ランキング:<%=@all_player_rank%>位</p>
+    <p>当日ランキング:<%= @today_rank %>位でした！</p>
 </body>
 </html>

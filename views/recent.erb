@@ -4,9 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>QR</title>
+    <title>recent</title>
 </head>
 <body>
-    <img src="<%= @qr %>" alt="qr">
+
+    <% @recent_players.each do |player| %>
+        <p><%= player.id %></p>
+        <p><%= player.name %></p>
+        <%= link_to url(player.id), "結果" %>
+        <hr>
+    <% end %>
+    
 </body>
 </html>

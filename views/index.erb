@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>結果！</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <img src="../img/logo.png" alt="magicBlock">
+        </div>
+        <div id="contents">
+            <div id="title">
+                <div class="name"><%= @name %></div>さんのゲーム結果
+            </div>
+            <div class="result vr">
+                <div class="img-container">
+                    <img src="../img/ant.png" alt="アント">
+                    <p class="chara-name">アント</p>
+                </div>
+                <div class="text">
+                    Score <%= @score_VR%><br>
+                    結果 win<br>
+                    メッセージ<br>
+                    <div class = "message-box">
+                        お疲れ様！
+                    </div>
+                </div>
+            </div>
+            <div class="result two-dim">
+                <div class="img-container">
+                    <img src="../img/peta.png" alt="ペタ">
+                    <p class="chara-name">ペタ</p>
+                </div>
+                <div class="text">
+                    Score <%= @score_2D %><br>
+                    結果 win<br>
+                    メッセージ<br>
+                    <div class ="message-box">
+                        お疲れ様。<br>
+                        また一緒にがんばろ！
+                    </div>
+                </div>
+            </div>
+            
+            <div class="overall">
+                <div class="score_and_ranking">
+                    Score <%= @total %><br>
+                    当日ランキング　<%= @today_rank %>位<br>
+                    鳳祭内ランキング　<%= @all_player_rank %>位<br>
+                </div>
+                <div class="eval">
+                    落ち着きのなさ　★★★★☆<br>
+                    頑張り度       ★★★☆☆
+                </div>
+                <div class="last-message">
+                    2次元での生活をおすすめします！
+                </div>
+            </div>
+            
+            <a class="button" href="./index.html">アンケート</a>
+            <div id="enquete">
+                アンケートにご協力ください。<br>
+                アンケート後に全体のランキングがご確認いただけます。
+            </div>
+        </div>
+        <div id="footer">
+            
+        </div>
+    </div>
+</body>
+</html>
