@@ -194,6 +194,19 @@ div.overall:before{
     text-align: center;
 }
 
+a {
+    margin: 2% 0;
+    color:white;
+}
+
+a.twitter-link {
+    color:blue;
+}
+.twitter-link img{
+    width:15vw;
+    height: auto;
+}
+
 @media screen and (max-width:1300px){
     #contents{
         width:70vw;
@@ -206,6 +219,9 @@ div.overall:before{
 @media screen and (max-width:980px){
     #contents{
         width:90%;
+    }
+    #footer {
+        width: 100%;
     }
     div.result:before{
         top:-42px !important;
@@ -239,4 +255,10 @@ div.overall:before{
         font-size: 30px;
         -webkit-text-stroke: 3px #3A3839;
     }
+
+    .twitter-link img{
+        width:40vw;
+        height: auto;
+    }
+    
 }
