@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="jp">
-<head>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="#{@name}さんのマジブロリザルト" />
+    <meta property="og:url" content="http://magiblo-result.herokuapp.com/result/#{@id}" />
+    <meta property="og:image" content="http://magiblo-result.hrtokuapp.com/#{@id}.png" />
+    <meta property="og:site_name" content="マジックブロック" />
+    <meta property="og:description" content="#{@name}さんの結果です！ #{@total}点取りました！!" />
+    
+    <meta property="fb:app_id" content="2223149394638612" />
+    
+    <meta name="twitter:site" content="@toy_labo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image:src" content="http://magiblo-result.hrtokuapp.com/#{@id}.png">
+
     <title>結果！</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
 </head>

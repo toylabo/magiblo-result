@@ -171,14 +171,13 @@ div.overall:before{
     font-size: 36px;
 }
 
-.img-container img{
+.img-container img {
     position: absolute;
-    top: 10%;
-    left:3%;
-    width:auto;
-    height:80%;
+    top: 0;
+    left: -30%;
+    width: auto;
+    height: 120%;
 }
-
 .button {
     display: block;
     padding: 0.5em 2em;
@@ -214,6 +213,7 @@ div.overall:before{
     }
     div.result{
         margin: 50px 0 !important;
+        width: 90%;
     }
     div.result.vr{
         margin-top:70px !important;
@@ -221,6 +221,7 @@ div.overall:before{
     .image-container img {
         width:100% !important;
         height:auto !important;
+        top: 7%;
     }
     div.name {
         display: inline-block;
