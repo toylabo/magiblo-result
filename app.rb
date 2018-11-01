@@ -43,8 +43,8 @@ get '/result/:id' do
             @total = @player.total
             @is_win_VR = @player.isWinVR
             @is_win_2D = @player.isWin2D
-            @chara_VR = @player.charaVR
-            @chara_2D = @player.chara2D
+            @chara_VR = @player.charaVR.downcase
+            @chara_2D = @player.chara2D.downcase
             @restless_str = @player.restlessStr
             @effort_str = @player.effortStr
 
