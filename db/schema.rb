@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_190326) do
+ActiveRecord::Schema.define(version: 2018_11_01_231358) do
 
   create_table "players", force: :cascade do |t|
     t.string "name"
@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 2018_10_31_190326) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "total"
-    t.boolean "isWinVR"
-    t.boolean "isWin2D"
+    t.string "isWinVR"
+    t.string "isWin2D"
     t.string "charaVR"
     t.string "chara2D"
     t.string "restlessStr"

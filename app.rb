@@ -42,22 +42,23 @@ get '/result/:id' do
             @score_VR = @player.scoreVR
             @score_2D = @player.score2D
             @total = @player.total
-            @result_VR = @player.isWinVR.to_s
-            @result_2D = @player.isWin2D.to_s
+            @result_VR = @player.isWinVR.downcase
+            @result_2D = @player.isWin2D.downcase
             @chara_VR = @player.charaVR.downcase
             @chara_2D = @player.chara2D.downcase
             @restless_str = @player.restlessStr
             @effort_str = @player.effortStr
             
-            if @result_VR.to_s == "true"
-                @result_VR_str = "win"
-            else
-                @result_VR_str = "lose"
+            if @result_VR == "true"
+                @result_VR = "win"
+            elsif @result_VR == "false"
+                @result_VR = "lose"
             end
-            if @result_2D.to_s == "true"
-                @result_2D_str = "win"
-            else
-                @result_2D_str = "lose"
+
+            if @result_2D == "true"
+                @result_2D = "win"
+            elsif @result_2D == "false"
+                @result_2D = "lose"
             end
 
             json_comments = open('./public/comments.json') do |io|
@@ -67,13 +68,13 @@ get '/result/:id' do
             @chara_VR_JPN = json_comments[@chara_VR]['nameJPN']
             @chara_2D_JPN = json_comments[@chara_2D]['nameJPN']
 
-            if @result_VR == "Win"
+            if @result_VR == "win"
                 @comment_VR = json_comments[@chara_VR]['messages']['win']
             else
                 @comment_VR = json_comments[@chara_VR]['messages']['lose']
             end
 
-            if @result_2D == "Win"
+            if @result_2D == "win"
                 @comment_2D = json_comments[@chara_2D]['messages']['win']
             else
                 @comment_2D = json_comments[@chara_2D]['messages']['lose']
@@ -182,8 +183,8 @@ helpers do
     end
 
     def url(id)
-        "https://result-magiblo.herokuapp.com/result/" + id.to_s
-        #"localhost:4567/result/" + id.to_s
+        #"https://result-magiblo.herokuapp.com/result/" + id.to_s
+        "localhost:4567/result/" + id.to_s
     end
 
 
