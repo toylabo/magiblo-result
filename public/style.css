@@ -171,14 +171,13 @@ div.overall:before{
     font-size: 36px;
 }
 
-.img-container img{
+.img-container img {
     position: absolute;
-    top: 10%;
-    left:3%;
-    width:auto;
-    height:80%;
+    top: 0;
+    left: -30%;
+    width: auto;
+    height: 120%;
 }
-
 .button {
     display: block;
     padding: 0.5em 2em;
@@ -195,6 +194,19 @@ div.overall:before{
     text-align: center;
 }
 
+a {
+    margin: 2% 0;
+    color:white;
+}
+
+a.twitter-link {
+    color:blue;
+}
+.twitter-link img{
+    width:15vw;
+    height: auto;
+}
+
 @media screen and (max-width:1300px){
     #contents{
         width:70vw;
@@ -208,12 +220,16 @@ div.overall:before{
     #contents{
         width:90%;
     }
+    #footer {
+        width: 100%;
+    }
     div.result:before{
         top:-42px !important;
         left:-16px;
     }
     div.result{
         margin: 50px 0 !important;
+        width: 90%;
     }
     div.result.vr{
         margin-top:70px !important;
@@ -221,6 +237,7 @@ div.overall:before{
     .image-container img {
         width:100% !important;
         height:auto !important;
+        top: 7%;
     }
     div.name {
         display: inline-block;
@@ -238,4 +255,10 @@ div.overall:before{
         font-size: 30px;
         -webkit-text-stroke: 3px #3A3839;
     }
+
+    .twitter-link img{
+        width:40vw;
+        height: auto;
+    }
+    
 }
