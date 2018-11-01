@@ -48,6 +48,17 @@ get '/result/:id' do
             @chara_2D = @player.chara2D.downcase
             @restless_str = @player.restlessStr
             @effort_str = @player.effortStr
+            
+            if @result_VR.to_s == "true"
+                @result_VR_str = "win"
+            else
+                @result_VR_str = "lose"
+            end
+            if @result_2D.to_s == "true"
+                @result_2D_str = "win"
+            else
+                @result_2D_str = "lose"
+            end
 
             json_comments = open('./public/comments.json') do |io|
                 JSON.load(io)
@@ -128,6 +139,11 @@ post '/qr' do
         @result_2D = params[:isWin2D]
         @chara_VR = params[:charaVR]
         @chara_2D = params[:chara2D]
+
+        if @chara_2D == 'jasmin'
+            @chara_2D = 'jasmine'
+        end
+
         evaluation(params[:moveCount].to_i, @total)
         @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total, isWinVR: @result_VR,
                              isWin2D: @result_2D, charaVR: @chara_VR, chara2D: @chara_2D, restlessStr: @restless_str, effortStr: @effort_str)
