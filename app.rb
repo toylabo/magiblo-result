@@ -94,6 +94,7 @@ get '/result/:id' do
             today_players.each.with_index(1) do |player,index|
                 @today_rank = index if @player.id == player.id
             end
+            @ogp_meta = makeOGPMeta(@id,@name,@total)
             makeOGP(@id,@name,@score_VR,@score_2D,@is_win_VR,@is_win_2D,@chara_VR,@chara_2D,@comment_VR,@comment_2D,@all_player_rank,@today_rank,@restless_str,@effort_str)
             @twitter_anchor = makeTweetLink(@id,@name,@total)
             erb:index
