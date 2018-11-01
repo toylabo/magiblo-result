@@ -13,6 +13,7 @@ require 'rack/contrib'
 require 'json'
 require './twit'
 require 'RMagick'
+require 'to-bool'
 
 client = DropboxApi::Client.new('WkeCul5dyEAAAAAAAAAAD2PBfg0VPNVum7vz4ZzxxUXI8_n28llbMPjm4WUcayIN')
 use Rack::PostBodyContentTypeParser
