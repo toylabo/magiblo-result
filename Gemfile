@@ -21,5 +21,6 @@ gem 'rqrcode_png'
 gem 'chunky_png'
 gem 'dropbox_api'
 gem 'rmagick'
+gem 'to-bool'
 
 gem 'tux'

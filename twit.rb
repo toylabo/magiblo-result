@@ -33,7 +33,7 @@ def makeOGP(id,name,scoreVR,score2D,isWinVR,isWin2D,charaVR,chara2D,messageVR,me
         result2D = "lose"
     end
 
-    output = "public/ogp/#{id.to_s}.png"
+    output = "./public/#{id.to_s}.png"
     frame = Magick::ImageList.new(framePath)
     charaVRImg = Magick::ImageList.new(charaVRImgPath)
     chara2DImg = Magick::ImageList.new(chara2DImgPath)
@@ -70,8 +70,8 @@ def makeOGP(id,name,scoreVR,score2D,isWinVR,isWin2D,charaVR,chara2D,messageVR,me
         self.pointsize = 18
     end
 
-    imageWithVR = frame.composite!(charaVRImg.resize_to_fit(170, 170),15,160, Magick::OverCompositeOp)
-    imageWith2D = imageWithVR.composite!(chara2DImg.resize_to_fit(170, 170),520,160,Magick::OverCompositeOp);
+    imageWithVR = frame.composite(charaVRImg.resize_to_fit(170, 170),15,160, Magick::OverCompositeOp)
+    imageWith2D = imageWithVR.composite(chara2DImg.resize_to_fit(170, 170),520,160,Magick::OverCompositeOp);
 
     imageWith2D.write(output)
 end
