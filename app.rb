@@ -183,8 +183,8 @@ helpers do
     end
 
     def url(id)
-        #"https://result-magiblo.herokuapp.com/result/" + id.to_s
-        "localhost:4567/result/" + id.to_s
+        "https://result-magiblo.herokuapp.com/result/" + id.to_s
+        #"localhost:4567/result/" + id.to_s
     end
 
 
