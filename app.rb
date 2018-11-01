@@ -48,6 +48,17 @@ get '/result/:id' do
             @chara_2D = @player.chara2D.downcase
             @restless_str = @player.restlessStr
             @effort_str = @player.effortStr
+            
+            if @result_VR.to_s == "true"
+                @result_VR_str = "win"
+            else
+                @result_VR_str = "lose"
+            end
+            if @result_2D.to_s == "true"
+                @result_2D_str = "win"
+            else
+                @result_2D_str = "lose"
+            end
 
             json_comments = open('./public/comments.json') do |io|
                 JSON.load(io)
