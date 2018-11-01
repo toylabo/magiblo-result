@@ -128,9 +128,9 @@ post '/qr' do
         @result_2D = params[:isWin2D]
         @chara_VR = params[:charaVR]
         @chara_2D = params[:chara2D]
-        
-        if @chara_2D == jasmin
-            @chara_2D = jasmine
+
+        if @chara_2D == 'jasmin'
+            @chara_2D = 'jasmine'
         end
 
         evaluation(params[:moveCount].to_i, @total)
