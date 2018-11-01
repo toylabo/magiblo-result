@@ -49,8 +49,6 @@ get '/result/:id' do
             @restless_str = @player.restlessStr
             @effort_str = @player.effortStr
 
-            
-
             json_comments = open('./public/comments.json') do |io|
                 JSON.load(io)
             end
@@ -205,7 +203,7 @@ helpers do
 
     end
 
-    isWin?(result) do
+     def isWin?(result)
         if result.downcase == "win"
             true
         elsif result.downcase == "lose"
