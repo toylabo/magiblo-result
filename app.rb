@@ -11,6 +11,8 @@ require 'dropbox_api'
 require 'chunky_png'
 require 'rack/contrib'
 require 'json'
+require './twit'
+require 'RMagick'
 
 client = DropboxApi::Client.new('WkeCul5dyEAAAAAAAAAAD2PBfg0VPNVum7vz4ZzxxUXI8_n28llbMPjm4WUcayIN')
 use Rack::PostBodyContentTypeParser
@@ -34,6 +36,7 @@ get '/result/:id' do
         end
 
         if @player.present?
+            @id = @player.id
             @name = @player.name
             @score_VR = @player.scoreVR
             @score_2D = @player.score2D
@@ -94,6 +97,7 @@ get '/result/:id' do
             today_players.each.with_index(1) do |player,index|
                 @today_rank = index if @player.id == player.id
             end
+            makeOGP(@id,@name,@score_VR,@score_2D,@is_win_VR,@is_win_2D,@chara_VR,@chara_2D,@comment_VR,@comment_2D,@all_player_rank,@today_rank,@restless_str,@effort_str)
             erb:index
         else
             error_missing_player
