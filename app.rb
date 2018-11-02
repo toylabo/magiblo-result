@@ -68,7 +68,6 @@ get '/result/:id' do
             @chara_VR_JPN = json_comments[@chara_VR]['nameJPN']
             @chara_2D_JPN = json_comments[@chara_2D]['nameJPN']
 
-            if
 
             if @result_VR == "win"
                 @comment_VR = json_comments[@chara_VR]['messages']['win']
