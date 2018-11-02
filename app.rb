@@ -69,15 +69,15 @@ get '/result/:id' do
             @chara_2D_JPN = json_comments[@chara_2D]['nameJPN']
 
             if @result_VR == "win"
-                @comment_VR = json_comments[@chara_VR]['messages']['win']
-            else
                 @comment_VR = json_comments[@chara_VR]['messages']['lose']
+            else
+                @comment_VR = json_comments[@chara_VR]['messages']['win']
             end
 
             if @result_2D == "win"
-                @comment_2D = json_comments[@chara_2D]['messages']['win']
-            else
                 @comment_2D = json_comments[@chara_2D]['messages']['lose']
+            else
+                @comment_2D = json_comments[@chara_2D]['messages']['win']
             end
 
             json_eval = open('./public/eval.json') do |io|
