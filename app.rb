@@ -135,7 +135,7 @@ get ['/ranking', '/ranking/', '/ranking/:id'] do
 end
 
 post '/qr' do
-    if params[:name].nil? || params[:scoreVR].nil? || params[:score2D].nil? || para
+    if params[:name].nil? || params[:scoreVR].nil? || params[:score2D].nil?
         "指定されていないパラメータがあります" 
     else
         @name = params[:name]
