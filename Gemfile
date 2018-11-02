@@ -22,5 +22,6 @@ gem 'chunky_png'
 gem 'dropbox_api'
 gem 'rmagick'
 gem 'to-bool'
+gem 'sinatra-cross_origin', "~> 0.3.1"
 
 gem 'tux'
