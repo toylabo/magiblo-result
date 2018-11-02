@@ -9,7 +9,6 @@
 <body>
 
     <% @players.each do |player| %>
-        <p><%= player.id %></p>
         <p><%= player.name %>    <%= player.total %></p>
         <%= link_to url(player.id), "結果" %>
         <hr>
