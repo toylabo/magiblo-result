@@ -235,11 +235,12 @@ a.twitter-link {
   div.result.vr {
     margin-top: 70px !important;
   }
-  .image-container img {
-    width: 100% !important;
-    height: auto !important;
-    top: 7%;
-    left: -60%;
+  div.overall {
+    width: 70%;
+  }
+  .result img {
+    top: 0;
+    left: -80px !important;
   }
   div.name {
     display: inline-block;
