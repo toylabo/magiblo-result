@@ -4,7 +4,7 @@ require 'RMagick'
 def makeTweetLink(id,name,totalScore)
     tweetStr = "#{name}のスコアは【#{totalScore}】！%0a"
     tweetUrl = "https://result-magiblo.herokuapp.com/result/#{id}"
-    insideAnchor = "<img src=\"../img/tweet.svg\" alt=\"結果をツイートする\">"
+    insideAnchor = "<img src=\"../img/tweet.png\" alt=\"結果をツイートする\">"
     return "<a href=\"https://twitter.com/intent/tweet?text=#{tweetStr}&url=#{tweetUrl}&hashtags=マジブロ,toy_labo&related=toy_labo\" onClick=\"window.open(encodeURI(decodeURI(this.href)), 'tweetwindow', 'width=650, height=470, personalbar=0, toolbar=0, scrollbars=1, sizable=1'); return false;\" rel=\"nofollow\" class=\"twitter-link\">#{insideAnchor}</a>"        
 end
 
