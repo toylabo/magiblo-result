@@ -68,6 +68,7 @@ get '/result/:id' do
             @chara_VR_JPN = json_comments[@chara_VR]['nameJPN']
             @chara_2D_JPN = json_comments[@chara_2D]['nameJPN']
 
+
             if @result_VR == "win"
                 @comment_VR = json_comments[@chara_VR]['messages']['win']
             else
@@ -86,13 +87,14 @@ get '/result/:id' do
 
             if isWin?(@result_VR) && isWin?(@result_2D)
                 @eval_messages = json_eval[0]
-            elsif isWin?(@result_VR) && !(isWin?(@result_2D))
-                @eval_messages = json_eval[1]
             elsif !(isWin?(@result_VR)) && isWin?(@result_2D)
+                @eval_messages = json_eval[1]
+            elsif isWin?(@result_VR) && !(isWin?(@result_2D))
                 @eval_messages = json_eval[2]
             elsif !(isWin?(@result_VR)) && !(isWin?(@result_2D))
                 @eval_messages = json_eval[3]
             end
+
 
             today_players = Player.where(updated_at: Date.today.beginning_of_day.to_time..
                                          Date.today.end_of_day.to_time).
@@ -107,7 +109,7 @@ get '/result/:id' do
                 @today_rank = index if @player.id == player.id
             end
             @ogp_meta = makeOGPMeta(@id,@name,@total)
-            makeOGP(@id,@name,@score_VR,@score_2D,isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,@comment_VR,@comment_2D,@all_player_rank,@today_rank,@restless_str,@effort_str)
+            makeOGP(@id,@name,@score_2D,@score_VR,isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,@comment_VR,@comment_2D,@all_player_rank,@today_rank,@restless_str,@effort_str)
             @twitter_anchor = makeTweetLink(@id,@name,@total)
             erb:index
         else
@@ -190,12 +192,12 @@ helpers do
 
     def evaluation(move_count,total)
 
-        if move_count.div(10) == 0
+        if move_count.div(6) <= 0
             @restless_str_count = 1
-        elsif move_count.div(10) > 5
+        elsif move_count.div(6) > 5
             @restless_str_count = 5
         else
-            @restless_str_count = move_count.div(10)
+            @restless_str_count = move_count.div(6)
         end
 
         @restless_str = ""
@@ -205,12 +207,12 @@ helpers do
 
         @restless_str += "☆" * (5 - @restless_str_count)
 
-        if total.div(500) == 0
+        if total.abs.div(250) <= 0
             @effort_str_count = 1
-        elsif total.div(500) > 5
+        elsif total.abs.div(250) > 5
             @effort_str_count = 5            
         else
-            @effort_str_count = total.div(500)
+            @effort_str_count = total.abs.div(250)
         end
 
         @effort_str = ""
