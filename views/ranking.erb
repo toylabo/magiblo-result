@@ -9,7 +9,7 @@
 <body>
 
     <% @players.each.with_index(1) do |player,index| %>
-        <p><%= index %></p>位
+        <p><%= index %>位</p>
         <p><%= player.name %>  <%= player.total %></p>
         <%= link_to url(player.id), "結果" %>
         <hr>
