@@ -10,11 +10,11 @@ end
 
 def makeOGPMeta (id,name,total)
     "<meta property=\"og:title\" content=\"#{name}さんのマジブロリザルト\" />
-    <meta property=\"og:url\" content=\"http://magiblo-result.herokuapp.com/result/#{id}\" />
-    <meta property=\"og:image\" content=\"http://magiblo-result.herokuapp.com/#{id}.png\" />
+    <meta property=\"og:url\" content=\"http://result-magblo.herokuapp.com/result/#{id}\" />
+    <meta property=\"og:image\" content=\"http://result-magblo.herokuapp.com/#{id}.png\" />
     <meta property=\"og:site_name\" content=\"マジックブロック\" />
     <meta property=\"og:description\" content=\"#{name}さんの結果です！ #{total}点取りました！!\" />
-    <meta name=\"twitter:image:src\" content=\"http://magiblo-result.herokuapp.com/#{id}.png\">"
+    <meta name=\"twitter:image:src\" content=\"http://result-magblo.herokuapp.com/#{id}.png\">"
 end
 
 def makeOGP(id,name,scoreVR,score2D,isWinVR,isWin2D,charaVR,chara2D,messageVR,message2D,allPlayerRank,todayRank,restlessStr,effortStr)
