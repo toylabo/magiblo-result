@@ -15,7 +15,7 @@ require './twit'
 require 'RMagick'
 require 'to-bool'
 
-client = DropboxApi::Client.new('WkeCul5dyEAAAAAAAAAAD2PBfg0VPNVum7vz4ZzxxUXI8_n28llbMPjm4WUcayIN')
+client = DropboxApi::Client.new('oV2_fiUN1mAAAAAAAAAACSGg9RfeIPV7vGhAWevSQ_uxACHGUBDX9jESrVdzd1_I')
 use Rack::PostBodyContentTypeParser
 
 get '/' do
@@ -183,7 +183,7 @@ helpers do
     end
 
     def url(id)
-        "https://result-magiblo.herokuapp.com/result/" + id.to_s
+        "https://result-magiblo-dev.herokuapp.com/result/" + id.to_s
         #"localhost:4567/result/" + id.to_s
     end
 
