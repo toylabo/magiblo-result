@@ -42,8 +42,8 @@ get '/result/:id' do
             @score_VR = @player.scoreVR
             @score_2D = @player.score2D
             @total = @player.total
-            @result_VR = @player.isWinVR.downcase
-            @result_2D = @player.isWin2D.downcase
+            @result_VR = @player.isWinVR.to_s.downcase
+            @result_2D = @player.isWin2D.to_s.downcase
             @chara_VR = @player.charaVR.downcase
             @chara_2D = @player.chara2D.downcase
             @restless_str = @player.restlessStr
