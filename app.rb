@@ -68,16 +68,18 @@ get '/result/:id' do
             @chara_VR_JPN = json_comments[@chara_VR]['nameJPN']
             @chara_2D_JPN = json_comments[@chara_2D]['nameJPN']
 
+            if
+
             if @result_VR == "win"
-                @comment_VR = json_comments[@chara_VR]['messages']['lose']
-            else
                 @comment_VR = json_comments[@chara_VR]['messages']['win']
+            else
+                @comment_VR = json_comments[@chara_VR]['messages']['lose']
             end
 
             if @result_2D == "win"
-                @comment_2D = json_comments[@chara_2D]['messages']['lose']
-            else
                 @comment_2D = json_comments[@chara_2D]['messages']['win']
+            else
+                @comment_2D = json_comments[@chara_2D]['messages']['lose']
             end
 
             json_eval = open('./public/eval.json') do |io|
@@ -206,12 +208,12 @@ helpers do
 
         @restless_str += "☆" * (5 - @restless_str_count)
 
-        if total.div(250) <= 0
+        if total.abs.div(250) <= 0
             @effort_str_count = 1
-        elsif total.div(250) > 5
+        elsif total.abs.div(250) > 5
             @effort_str_count = 5            
         else
-            @effort_str_count = total.div(250)
+            @effort_str_count = total.abs.div(250)
         end
 
         @effort_str = ""
