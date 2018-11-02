@@ -133,6 +133,7 @@ end
 get ['/ranking', '/ranking/', '/ranking/:id'] do
     params[:id] = 10 if params[:id].nil?
     @players = Player.order('total DESC').limit(params[:id])
+    erb:ranking
 end
 
 post '/qr' do
