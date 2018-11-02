@@ -64,9 +64,8 @@ get '/result/:id' do
             json_comments = open('./public/comments.json') do |io|
                 JSON.load(io)
             end
-
             
-            @chara_VR_JPN = json_comments[@chara_VR]['nameJPN'] if 
+            @chara_VR_JPN = json_comments[@chara_VR]['nameJPN']
             @chara_2D_JPN = json_comments[@chara_2D]['nameJPN']
 
             if @result_VR == "win"
@@ -96,21 +95,24 @@ get '/result/:id' do
             end
 
 
-            today_players = Player.where(updated_at: Date.today.beginning_of_day.to_time..
+            @today_players = Player.where(updated_at: Date.today.beginning_of_day.to_time..
                                          Date.today.end_of_day.to_time).
                                          order('total DESC')
+
             @players = Player.order('total DESC')
 
             @players.each.with_index(1) do |player,index| 
                 @all_player_rank = index if @player.id == player.id
             end
 
-            today_players.each.with_index(1) do |player,index|
+            @today_players.each.with_index(1) do |player,index|
                 @today_rank = index if @player.id == player.id
             end
+
             @ogp_meta = makeOGPMeta(@id,@name,@total)
             makeOGP(@id,@name,@score_2D,@score_VR,isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,@comment_VR,@comment_2D,@all_player_rank,@today_rank,@restless_str,@effort_str)
             @twitter_anchor = makeTweetLink(@id,@name,@total)
+
             erb:index
         else
             error_missing_player
@@ -120,13 +122,9 @@ get '/result/:id' do
     end
 end
 
-get ['/qr/recent', '/qr/recent/:id'] do
-    if params[:id].nil?
-        params[:id] = 10
-    end
+get ['/recent', '/recent/', '/recent/:id'] do
+    params[:id] = 10 if params[:id].nil?
     @recent_players = Player.order('updated_at DESC').limit(params[:id])
-    #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
-    #@url = "localhost:4567/result/#{@player.id}"
     erb:recent
 end
 
@@ -137,7 +135,7 @@ get ['/ranking', '/ranking/', '/ranking/:id'] do
 end
 
 post '/qr' do
-    if params[:name].nil? || params[:scoreVR].nil? || params[:score2D].nil?
+    if params[:name].nil? || params[:scoreVR].nil? || params[:score2D].nil? || para
         "指定されていないパラメータがあります" 
     else
         @name = params[:name]
@@ -157,8 +155,6 @@ post '/qr' do
         @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total, isWinVR: @result_VR,
                              isWin2D: @result_2D, charaVR: @chara_VR, chara2D: @chara_2D, restlessStr: @restless_str, effortStr: @effort_str)
         @player.save
-        #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
-        #@url = "localhost:4567/result/#{@player.id}"
         @url = url(@player.id)
         qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
         @qr = qr.to_img.resize(600,600)
@@ -169,12 +165,8 @@ post '/qr' do
         @link = client.create_shared_link_with_settings("/#{@player.id}.png")
         @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
         puts @qr_url
-        #puts "https://dl.dropboxusercontent.com/s/#{@player.id}.png"
         erb:qr2
     end
-end
-
-get '/qr/:id' do
 end
 
 get '*' do
@@ -213,12 +205,12 @@ helpers do
 
         @restless_str += "☆" * (5 - @restless_str_count)
 
-        if total.abs.div(250) <= 0
+        if total.div(250) <= 0
             @effort_str_count = 1
-        elsif total.abs.div(250) > 5
+        elsif total.div(250) > 5
             @effort_str_count = 5            
         else
-            @effort_str_count = total.abs.div(250)
+            @effort_str_count = total.div(250)
         end
 
         @effort_str = ""
