@@ -94,8 +94,9 @@ get '/result/:id' do
                 @eval_messages = json_eval[3]
             end
 
-            today_players = Player.where(updated_at: Date.today.beginning_of_day.to_time..
-                                         Date.today.end_of_day.to_time).
+
+            today_players = Player.where(updated_at: Date.today.beginning_of_day.to_time.localtome("+09:00")..
+                                         Date.today.end_of_day.to_time.localtime("+09:00")).
                                          order('total DESC')
             @players = Player.order('total DESC')
 
@@ -107,7 +108,7 @@ get '/result/:id' do
                 @today_rank = index if @player.id == player.id
             end
             @ogp_meta = makeOGPMeta(@id,@name,@total)
-            makeOGP(@id,@name,@score_VR,@score_2D,isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,@comment_VR,@comment_2D,@all_player_rank,@today_rank,@restless_str,@effort_str)
+            makeOGP(@id,@name,@score_2D,@score_VR,isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,@comment_VR,@comment_2D,@all_player_rank,@today_rank,@restless_str,@effort_str)
             @twitter_anchor = makeTweetLink(@id,@name,@total)
             erb:index
         else
