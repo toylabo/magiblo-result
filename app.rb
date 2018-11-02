@@ -95,8 +95,8 @@ get '/result/:id' do
             end
 
 
-            today_players = Player.where(updated_at: Date.today.beginning_of_day.to_time.localtome("+09:00")..
-                                         Date.today.end_of_day.to_time.localtime("+09:00")).
+            today_players = Player.where(updated_at: Date.today.beginning_of_day.to_time..
+                                         Date.today.end_of_day.to_time).
                                          order('total DESC')
             @players = Player.order('total DESC')
 
