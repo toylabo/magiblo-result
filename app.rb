@@ -65,9 +65,9 @@ get '/result/:id' do
                 JSON.load(io)
             end
 
-            @chara_VR_JPN = json_comments[@chara_VR]['nameJPN']
+            
+            @chara_VR_JPN = json_comments[@chara_VR]['nameJPN'] if 
             @chara_2D_JPN = json_comments[@chara_2D]['nameJPN']
-
 
             if @result_VR == "win"
                 @comment_VR = json_comments[@chara_VR]['messages']['win']
@@ -128,6 +128,11 @@ get ['/qr/recent', '/qr/recent/:id'] do
     #@url = "https://result-magiblo.herokuapp.com/result/#{@player.id}"
     #@url = "localhost:4567/result/#{@player.id}"
     erb:recent
+end
+
+get ['/ranking', '/ranking/', '/ranking/:id'] do
+    params[:id] = 10 if params[:id].nil?
+    @players = Player.order('total DESC').limit(params[:id])
 end
 
 post '/qr' do
