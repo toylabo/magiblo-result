@@ -190,12 +190,12 @@ helpers do
 
     def evaluation(move_count,total)
 
-        if move_count.div(10) == 0
+        if move_count.div(6) == 0
             @restless_str_count = 1
-        elsif move_count.div(10) > 5
+        elsif move_count.div(6) > 5
             @restless_str_count = 5
         else
-            @restless_str_count = move_count.div(10)
+            @restless_str_count = move_count.div(6)
         end
 
         @restless_str = ""
@@ -205,12 +205,12 @@ helpers do
 
         @restless_str += "☆" * (5 - @restless_str_count)
 
-        if total.div(500) == 0
+        if total.div(250) == 0
             @effort_str_count = 1
-        elsif total.div(500) > 5
+        elsif total.div(250) > 5
             @effort_str_count = 5            
         else
-            @effort_str_count = total.div(500)
+            @effort_str_count = total.div(250)
         end
 
         @effort_str = ""
