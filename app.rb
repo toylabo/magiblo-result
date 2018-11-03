@@ -86,9 +86,9 @@ get '/result/:id' do
 
             if isWin?(@result_VR) && isWin?(@result_2D)
                 @eval_messages = json_eval[0]
-            elsif !(isWin?(@result_VR)) && isWin?(@result_2D)
-                @eval_messages = json_eval[1]
             elsif isWin?(@result_VR) && !(isWin?(@result_2D))
+                @eval_messages = json_eval[1]
+            elsif !(isWin?(@result_VR)) && isWin?(@result_2D)
                 @eval_messages = json_eval[2]
             elsif !(isWin?(@result_VR)) && !(isWin?(@result_2D))
                 @eval_messages = json_eval[3]
