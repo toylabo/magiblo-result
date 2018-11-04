@@ -110,7 +110,7 @@ get '/result/:id' do
             end
 
             @ogp_meta = makeOGPMeta(@id,@name,@total)
-            makeOGP(@id,@name,@score_2D,@score_VR,isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,@comment_VR,@comment_2D,@all_player_rank,@today_rank,@restless_str,@effort_str)
+            makeOGP(@id,@name,@score_VR,@score_2D,isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,@comment_VR,@comment_2D,@all_player_rank,@today_rank,@restless_str,@effort_str)
             @twitter_anchor = makeTweetLink(@id,@name,@total)
 
             erb:index
