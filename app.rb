@@ -14,6 +14,8 @@ require 'json'
 require './twit'
 require 'RMagick'
 require 'to-bool'
+require 'will_paginate/view_helpers/sinatra'
+require 'will_paginate/active_record'
 
 client = DropboxApi::Client.new('WkeCul5dyEAAAAAAAAAAD2PBfg0VPNVum7vz4ZzxxUXI8_n28llbMPjm4WUcayIN')
 use Rack::PostBodyContentTypeParser
@@ -122,15 +124,15 @@ get '/result/:id' do
     end
 end
 
-get ['/recent', '/recent/', '/recent/:id'] do
-    params[:id] = 10 if params[:id].nil?
-    @recent_players = Player.order('updated_at DESC').limit(params[:id])
+get ['/recent', '/recent/'] do
+    @per_page = params[:per_page] || 10
+    @recent_players = Player.order('id DESC').paginate(:page => params[:page], :per_page => @per_page)
     erb:recent
 end
 
-get ['/ranking', '/ranking/', '/ranking/:id'] do
-    params[:id] = 10 if params[:id].nil?
-    @players = Player.order('total DESC').limit(params[:id])
+get ['/ranking', '/ranking/'] do
+    @per_page = params[:per_page] || 10
+    @players = Player.order('total DESC').paginate(:page => params[:page], :per_page => @per_page)
     erb:ranking
 end
 
@@ -160,12 +162,17 @@ post '/qr' do
         @qr = qr.to_img.resize(600,600)
         @path = "public/qr/#{@player.id}.png"
         @qr.save(@path)
-        file_content = IO.read(@path)
-        client.upload "/#{@player.id}.png", file_content, :mode => :overwrite
-        @link = client.create_shared_link_with_settings("/#{@player.id}.png")
-        @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
-        puts @qr_url
-        erb:qr2
+        # production環境でのみDropBoxにQRをアップロード
+        if settings.production?
+            file_content = IO.read(@path)
+            client.upload "/#{@player.id}.png", file_content, :mode => :overwrite
+            @link = client.create_shared_link_with_settings("/#{@player.id}.png")
+            @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
+            puts @qr_url
+            erb:qr2
+        else
+            erb:qr
+        end
     end
 end
 
