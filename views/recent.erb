@@ -7,6 +7,7 @@
     <title>recent</title>
 </head>
 <body>
+    <%= will_paginate @recent_players %>
 
     <% @recent_players.each do |player| %>
         <p><%= player.id %></p>
@@ -15,5 +16,6 @@
         <hr>
     <% end %>
     
+    <%= will_paginate @recent_players %>
 </body>
 </html>

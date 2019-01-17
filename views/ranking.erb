@@ -7,13 +7,13 @@
     <title>ranking</title>
 </head>
 <body>
-
-    <% @players.each.with_index(1) do |player,index| %>
-        <p><%= index %>位</p>
+    <%= will_paginate @players %>
+    <% @players.each do |player| %>
+        <p><%= Player.where("total >= ?", player.total).count %>位</p>
         <p><%= player.name %>  <%= player.total %></p>
         <%= link_to url(player.id), "結果" %>
         <hr>
     <% end %>
-    
+    <%= will_paginate @players %>
 </body>
 </html>
