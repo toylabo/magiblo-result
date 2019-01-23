@@ -92,10 +92,9 @@ get '/result/:id' do
                 @eval_messages = json_eval[1]
             elsif !(isWin?(@result_VR)) && isWin?(@result_2D)
                 @eval_messages = json_eval[2]
-            elsif !(isWin?(@result_VR)) && !(isWin?(@result_2D))
+            elsif !((isWin?(@result_VR)) || (isWin?(@result_2D)))
                 @eval_messages = json_eval[3]
             end
-
 
             @today_players = Player.where(updated_at: Date.today.beginning_of_day.in_time_zone('UTC').to_time..
                                          Date.today.end_of_day.in_time_zone('UTC').to_time).
