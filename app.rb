@@ -24,7 +24,6 @@ get '/' do
     "QRコードから結果を読み取ってください。"
 end
 
-
 get '/result' do
     "idがありません。"
 end

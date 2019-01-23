@@ -9,7 +9,7 @@
 <body>
     <%= will_paginate @players %>
     <% @players.each do |player| %>
-        <p><%= Player.where("total >= ?", player.total).count %>位</p>
+        <p><%= Player.where("total > ?", player.total).count + 1 %>位</p>
         <p><%= player.name %>  <%= player.total %></p>
         <%= link_to url(player.id), "結果" %>
         <hr>
