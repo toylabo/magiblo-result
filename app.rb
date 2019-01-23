@@ -29,8 +29,8 @@ get '/result' do
 end
 
 get '/result/:id' do
-    if !params[:id].nil?
-
+    unless params[:id].nil?
+    
         begin
             @player = Player.find(params[:id])
         rescue => error
@@ -49,18 +49,6 @@ get '/result/:id' do
             @chara_2D = @player.chara2D.downcase
             @restless_str = @player.restlessStr
             @effort_str = @player.effortStr
-            
-            if @result_VR == "true"
-                @result_VR = "win"
-            elsif @result_VR == "false"
-                @result_VR = "lose"
-            end
-
-            if @result_2D == "true"
-                @result_2D = "win"
-            elsif @result_2D == "false"
-                @result_2D = "lose"
-            end
 
             json_comments = open('./public/comments.json') do |io|
                 JSON.load(io)
@@ -136,7 +124,7 @@ get ['/ranking', '/ranking/'] do
 end
 
 post '/qr' do
-    if params[:name].nil? || params[:scoreVR].nil? || params[:score2D].nil?
+    if checkParamsNil?(params)
         "指定されていないパラメータがあります" 
     else
         @name = params[:name]
@@ -234,6 +222,13 @@ helpers do
         elsif result.downcase == "lose"
             false
         end
+    end
+
+    def checkParamsNil?(params)
+        params.each do |param|
+            return true if param.nil?
+        end
+        return false
     end
 
 end
