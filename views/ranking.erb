@@ -7,13 +7,23 @@
     <title>ranking</title>
 </head>
 <body>
-    <%= will_paginate @players %>
-    <% @players.each do |player| %>
-        <p><%= Player.where("total >= ?", player.total).count %>位</p>
-        <p><%= player.name %>  <%= player.total %></p>
-        <%= link_to url(player.id), "結果" %>
-        <hr>
-    <% end %>
-    <%= will_paginate @players %>
+    <div id="main">
+        <div id="header">
+            <img src="../img/logo.png" alt="magicBlock">
+        </div>
+        <div id="contents">    
+            <%= will_paginate @players %>
+            <% @players.each do |player| %>
+                <p><%= Player.where("total >= ?", player.total).count %>位</p>
+                <p><%= player.name %>  <%= player.total %></p>
+                <%= link_to url(player.id), "結果" %>
+                <hr>
+            <% end %>
+            <%= will_paginate @players %>
+        </div>
+        <div id="footer">
+            <p>©2018~2019 おもちゃLABO</p>
+        </div>
+    </div>
 </body>
 </html>

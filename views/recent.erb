@@ -7,15 +7,25 @@
     <title>recent</title>
 </head>
 <body>
-    <%= will_paginate @recent_players %>
+    <div id="main">
+        <div id="header">
+            <img src="../img/logo.png" alt="magicBlock">
+        </div>
+        <div id="contents">    
+            <%= will_paginate @recent_players %>
 
-    <% @recent_players.each do |player| %>
-        <p><%= player.id %></p>
-        <p><%= player.name %></p>
-        <%= link_to url(player.id), "結果" %>
-        <hr>
-    <% end %>
-    
-    <%= will_paginate @recent_players %>
+            <% @recent_players.each do |player| %>
+                <p><%= player.id %></p>
+                <p><%= player.name %></p>
+                <%= link_to url(player.id), "結果" %>
+                <hr>
+            <% end %>
+            
+            <%= will_paginate @recent_players %>
+        </div>
+        <div id="footer">
+            <p>©2018~2019 おもちゃLABO</p>
+        </div>
+    </div>
 </body>
 </html>
