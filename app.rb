@@ -129,7 +129,7 @@ post '/qr' do
     rescue => error
         return error
     end
-    
+
     @url = url(@player.id)
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
     @qr = qr.to_img.resize(600,600)
@@ -206,13 +206,6 @@ helpers do
         elsif result == "lose"
             false
         end
-    end
-
-    def checkParamsNil?(params)
-        params.each do |param|
-            return true if param.nil?
-        end
-        return false
     end
 
 end
