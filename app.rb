@@ -17,7 +17,8 @@ require 'to-bool'
 require 'will_paginate/view_helpers/sinatra'
 require 'will_paginate/active_record'
 
-client = DropboxApi::Client.new('oV2_fiUN1mAAAAAAAAAACSGg9RfeIPV7vGhAWevSQ_uxACHGUBDX9jESrVdzd1_I')
+client = DropboxApi::Client.new
+
 use Rack::PostBodyContentTypeParser
 
 get '/' do
@@ -157,13 +158,8 @@ helpers do
     end
 
     def url(id)
-        if settings.production?
-            "https://result-magiblo.herokuapp.com/result/" + id.to_s
-        elsif settings.test?
-            "https://result-magiblo-dev.herokuapp.com/result/" + id.to_s
-        else
-            "localhost:4567/result/" + id.to_s
-        end
+        ENV['DEPLOY_URL'] + id.to_s
+        # "localhost:4567/result/" + id.to_s
     end
 
     def evaluation(move_count,total)
