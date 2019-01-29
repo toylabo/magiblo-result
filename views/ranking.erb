@@ -28,7 +28,7 @@
         <div id="contents">    
             <%= will_paginate @players %>
             <% @players.each do |player| %>
-                <% @player_rank = Player.where("total > ?", player.total).count %>
+                <% @player_rank = Player.where("total > ?", player.total).count + 1 %>
                 <div class="player">
                     <div class="rank_and_chara">
                         <div class="rank">
