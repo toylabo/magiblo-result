@@ -39,28 +39,20 @@ get '/result/:id' do
         end
 
         if @player.present?
-            @id = @player.id
-            @name = @player.name
-            @score_VR = @player.scoreVR
-            @score_2D = @player.score2D
-            @total = @player.total
-            @result_VR = @player.isWinVR.to_s.downcase
-            @result_2D = @player.isWin2D.to_s.downcase
+            @result_VR = @player.isWinVR.downcase
+            @result_2D = @player.isWin2D.downcase
             @chara_VR = @player.charaVR.downcase
             @chara_2D = @player.chara2D.downcase
-            @restless_str = @player.restlessStr
-            @effort_str = @player.effortStr
 
             json_comments = open('./public/comments.json') do |io|
                 JSON.load(io)
             end
             
-            @chara_VR_JPN = json_comments[@chara_VR]['nameJPN']
-            @chara_2D_JPN = json_comments[@chara_2D]['nameJPN']
+            @chara_VR_JPN = json_comments[@player.scoreVR]['nameJPN']
+            @chara_2D_JPN = json_comments[@player.score2D]['nameJPN']
 
             @comment_VR = json_comments[@chara_VR]['messages'][@result_VR]
             @comment_2D = json_comments[@chara_2D]['messages'][@result_2D]
-
 
             json_eval = open('./public/eval.json') do |io|
                 JSON.load(io)
@@ -72,7 +64,7 @@ get '/result/:id' do
                 @eval_messages = json_eval[1]
             elsif !(isWin?(@result_VR)) && isWin?(@result_2D)
                 @eval_messages = json_eval[2]
-            elsif !(isWin?(@result_VR)) && !(isWin?(@result_2D))
+            elsif !((isWin?(@result_VR)) || (isWin?(@result_2D)))
                 @eval_messages = json_eval[3]
             end
 
@@ -80,14 +72,14 @@ get '/result/:id' do
                                          Date.today.end_of_day.in_time_zone('UTC').to_time).
                                          order('total DESC')
 
-            @players = Player.order('total DESC')
-
             @all_players_rank = Player.where("total > ?", @player.total).count + 1
             @today_players_rank = @today_players.where("total > ?", @today_players.total).count + 1
 
-            @ogp_meta = makeOGPMeta(@id,@name,@total)
-            makeOGP(@id,@name,@score_VR,@score_2D,isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,@comment_VR,@comment_2D,@all_player_rank,@today_rank,@restless_str,@effort_str)
-            @twitter_anchor = makeTweetLink(@id,@name,@total)
+            @ogp_meta = makeOGPMeta(@player.id,@player.name,@player.total)
+            makeOGP(@player.id,@player.name,@player.scoreVR,@player.score2D,
+                    isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,
+                    @comment_VR,@comment_2D,@all_player_rank,@today_rank,@player.restless_str,@player.effort_str)
+            @twitter_anchor = makeTweetLink(@player.id,@player.name,@player.total)
 
             erb:index
         else
@@ -134,8 +126,7 @@ post '/qr' do
     @url = url(@player.id)
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
     @qr = qr.to_img.resize(600,600)
-    @path = "public/qr/#{@player.id}.png"
-    @qr.save(@path)
+    @qr.save("public/qr/#{@player.id}.png")
     file_content = IO.read(@path)
     client.upload "/#{@player.id}.png", file_content, :mode => :overwrite
     @link = client.create_shared_link_with_settings("/#{@player.id}.png")
@@ -153,8 +144,12 @@ helpers do
         "URLが間違っているか、データが登録されていない可能性があります。"
     end
 
-    def link_to(url, text=url)
-        "<a href=\"#{url}\">#{text}</a>"
+    def link_to(url, text=url, options={})
+        "<a href=\"#{url}\" #{"class=\"#{options[:class]}\"" unless options[:class].nil? } >#{text}</a>"
+    end
+
+    def image_tag(path, alt="", options={})
+        "<img src=\"#{path}\" alt=\"#{alt}\" #{('class=\"'+options[:class] +'\"') unless options[:class].nil? } >"
     end
 
     def url(id)
@@ -196,7 +191,12 @@ helpers do
 
     end
 
-     def isWin?(result)
+
+    def higherChara(player)
+        return player.score2D >= player.scoreVR ? player.chara2D : player.charaVR
+    end
+
+    def isWin?(result)
         if result == "win"
             true
         elsif result == "lose"

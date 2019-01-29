@@ -2,15 +2,15 @@
 player_<%= n %>:
   id: <%= n %>
   name: <%= "player#{n}" %>
-  scoreVR: <%= n * 10 %>
-  score2D: <%= n * 10 %>
+  scoreVR: <%= 500 - n * 10 %>
+  score2D: <%= n * 20 %>
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>
   total: <%= n * 20 %>
   isWinVR: "false"
   isWin2D: "true"
-  charaVR: "ant"
-  chara2D: "peta"
+  charaVR: <%= n % 2 == 0 ? "ant" : "moff" %>
+  chara2D: <%= n % 2 == 0 ? "peta" : "jasmine" %>
   restlessStr: "★★★☆☆"
   effortStr: "★★☆☆☆"
 <% end %> 
