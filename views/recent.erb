@@ -2,8 +2,9 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=980, initial-scale=0.3">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/list.css">
     <title>recent</title>
 </head>
 <body>
@@ -13,14 +14,13 @@
         </div>
         <div id="contents">    
             <%= will_paginate @recent_players %>
-
             <% @recent_players.each do |player| %>
-                <p><%= player.id %></p>
-                <p><%= player.name %></p>
-                <%= link_to url(player.id), "結果" %>
-                <hr>
-            <% end %>
-            
+                <div class="player">
+                    <p><%= player.id %></p>
+                    <p><%= player.name %></p>
+                    <%= link_to "結果", url(player.id)%>
+                </div>
+            <% end %> 
             <%= will_paginate @recent_players %>
         </div>
         <div id="footer">

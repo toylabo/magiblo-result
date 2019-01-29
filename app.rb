@@ -184,8 +184,12 @@ helpers do
         "URLが間違っているか、データが登録されていない可能性があります。"
     end
 
-    def link_to(url, text=url)
-        "<a href=\"#{url}\">#{text}</a>"
+    def link_to(url, text=url, options={})
+        "<a href=\"#{url}\" #{"class=\"#{options[:class]}\"" unless options[:class].nil? } >#{text}</a>"
+    end
+
+    def image_tag(path, alt="", options={})
+        "<img src=\"#{path}\" alt=\"#{alt}\" #{('class=\"'+options[:class] +'\"') unless options[:class].nil? } >"
     end
 
     def url(id)
@@ -228,7 +232,11 @@ helpers do
 
     end
 
-     def isWin?(result)
+    def higherChara(player)
+        return player.score2D >= player.scoreVR ? player.chara2D : player.charaVR
+    end
+
+    def isWin?(result)
         if result.downcase == "win"
             true
         elsif result.downcase == "lose"

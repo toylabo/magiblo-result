@@ -2,9 +2,23 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/list.css">
     <title>ranking</title>
+    <% if (params[:page].nil? || params[:page] == 1.to_s)%>
+    <style>
+        .player:nth-of-type(2){
+            background-color: #E40067;
+        }
+        .player:nth-of-type(3){
+            background-color: #36B4C7;
+        }
+        .player:nth-of-type(4){
+            background-color: #C4CA00;
+        }
+    </style>
+    <% end %>
 </head>
 <body>
     <div id="main">
@@ -14,10 +28,25 @@
         <div id="contents">    
             <%= will_paginate @players %>
             <% @players.each do |player| %>
-                <p><%= Player.where("total >= ?", player.total).count %>位</p>
-                <p><%= player.name %>  <%= player.total %></p>
-                <%= link_to url(player.id), "結果" %>
-                <hr>
+                <% @player_rank = Player.where("total >= ?", player.total).count %>
+                <div class="player">
+                    <div class="rank_and_chara">
+                        <div class="rank">
+                            <%= image_tag("/img/crown.png",) if @player_rank <= 3 %>
+                            <p><%= @player_rank %>位</p>
+                        </div>
+                        <div class="chara">
+                            <img src="/img/<%= higherChara(player) %>.png" alt="<%= higherChara(player) %>">
+                        </div>
+                    </div>
+                    <div class="name_and_points">
+                        <p><%= player.name %>さん</p>
+                        <div class = "points_and_link">
+                            <p class="points"><%= player.total %>点</p>
+                            <%= link_to(url(player.id), "結果", class:"link") %>
+                        </div>
+                    </div>
+                </div>
             <% end %>
             <%= will_paginate @players %>
         </div>
