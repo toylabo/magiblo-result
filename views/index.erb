@@ -22,14 +22,14 @@
         </div>
         <div id="contents">
             <div id="title">
-                <div class="name"><%= @name %></div>さんのゲーム結果
+                <div class="name"><%= @player.name %></div>さんのゲーム結果
             </div>
             <div class="result vr">
                 <div class="img-container">
                     <img src="../img/<%= @chara_VR %>.png" alt="<%= @chara_VR_JPN %>">
                 </div>
                 <div class="text">
-                    Score <%= @score_VR %><br>
+                    Score <%= @player.scoreVR %><br>
                     結果 <%= @result_VR %><br>
                     メッセージ<br>
                     <div class = "message-box">
@@ -42,7 +42,7 @@
                     <img src="../img/<%= @chara_2D %>.png" alt="<%= @chara_2D_JPN %>">
                 </div>
                 <div class="text">
-                    Score <%= @score_2D %><br>
+                    Score <%= @player.score2D %><br>
                     結果 <%= @result_2D %><br>
                     メッセージ<br>
                     <div class ="message-box">
@@ -53,13 +53,13 @@
             
             <div class="overall">
                 <div class="score_and_ranking">
-                    Score <%= @total %><br>
+                    Score <%= @player.total %><br>
                     当日ランキング　<%= @today_rank %>位<br>
-                    鳳祭内ランキング　<%= @all_player_rank %>位<br>
+                    全体ランキング　<%= @all_player_rank %>位<br>
                 </div>
                 <div class="eval">
-                    落ち着きのなさ　<%= @restless_str %><br>
-                    頑張り度       <%= @effort_str %>
+                    落ち着きのなさ　<%= @player.restless_str %><br>
+                    頑張り度       <%= @player.effort_str %>
                 </div>
                 <div class="last-message">
                     <%= @eval_messages %>

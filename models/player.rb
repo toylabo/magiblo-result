@@ -9,7 +9,11 @@ configure :production do
 end
 
 class Player < ActiveRecord::Base 
-    validates_presence_of :name
-    validates_presence_of :scoreVR
-    validates_presence_of :score2D
+    validates :name, presence: true
+    validates :scoreVR, presence: true
+    validates :score2D, presence: true
+    validates :resultVR, presence: true
+    validates :result2D, presence: true
+    validates :charaVR, presence: true
+    validates :chara2D, presence: true
 end

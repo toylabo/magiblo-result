@@ -17,21 +17,21 @@ require 'to-bool'
 require 'will_paginate/view_helpers/sinatra'
 require 'will_paginate/active_record'
 
-client = DropboxApi::Client.new('WkeCul5dyEAAAAAAAAAAD2PBfg0VPNVum7vz4ZzxxUXI8_n28llbMPjm4WUcayIN')
+client = DropboxApi::Client.new
+
 use Rack::PostBodyContentTypeParser
 
 get '/' do
     "QRコードから結果を読み取ってください。"
 end
 
-
 get '/result' do
     "idがありません。"
 end
 
 get '/result/:id' do
-    if !params[:id].nil?
-
+    unless params[:id].nil?
+    
         begin
             @player = Player.find(params[:id])
         rescue => error
@@ -39,48 +39,20 @@ get '/result/:id' do
         end
 
         if @player.present?
-            @id = @player.id
-            @name = @player.name
-            @score_VR = @player.scoreVR
-            @score_2D = @player.score2D
-            @total = @player.total
-            @result_VR = @player.isWinVR.to_s.downcase
-            @result_2D = @player.isWin2D.to_s.downcase
+            @result_VR = @player.isWinVR.downcase
+            @result_2D = @player.isWin2D.downcase
             @chara_VR = @player.charaVR.downcase
             @chara_2D = @player.chara2D.downcase
-            @restless_str = @player.restlessStr
-            @effort_str = @player.effortStr
-            
-            if @result_VR == "true"
-                @result_VR = "win"
-            elsif @result_VR == "false"
-                @result_VR = "lose"
-            end
-
-            if @result_2D == "true"
-                @result_2D = "win"
-            elsif @result_2D == "false"
-                @result_2D = "lose"
-            end
 
             json_comments = open('./public/comments.json') do |io|
                 JSON.load(io)
             end
             
-            @chara_VR_JPN = json_comments[@chara_VR]['nameJPN']
-            @chara_2D_JPN = json_comments[@chara_2D]['nameJPN']
+            @chara_VR_JPN = json_comments[@player.scoreVR]['nameJPN']
+            @chara_2D_JPN = json_comments[@player.score2D]['nameJPN']
 
-            if @result_VR == "win"
-                @comment_VR = json_comments[@chara_VR]['messages']['win']
-            else
-                @comment_VR = json_comments[@chara_VR]['messages']['lose']
-            end
-
-            if @result_2D == "win"
-                @comment_2D = json_comments[@chara_2D]['messages']['win']
-            else
-                @comment_2D = json_comments[@chara_2D]['messages']['lose']
-            end
+            @comment_VR = json_comments[@chara_VR]['messages'][@result_VR]
+            @comment_2D = json_comments[@chara_2D]['messages'][@result_2D]
 
             json_eval = open('./public/eval.json') do |io|
                 JSON.load(io)
@@ -100,19 +72,14 @@ get '/result/:id' do
                                          Date.today.end_of_day.in_time_zone('UTC').to_time).
                                          order('total DESC')
 
-            @players = Player.order('total DESC')
+            @all_players_rank = Player.where("total > ?", @player.total).count + 1
+            @today_players_rank = @today_players.where("total > ?", @today_players.total).count + 1
 
-            @players.each.with_index(1) do |player,index| 
-                @all_player_rank = index if @player.id == player.id
-            end
-
-            @today_players.each.with_index(1) do |player,index|
-                @today_rank = index if @player.id == player.id
-            end
-
-            @ogp_meta = makeOGPMeta(@id,@name,@total)
-            makeOGP(@id,@name,@score_VR,@score_2D,isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,@comment_VR,@comment_2D,@all_player_rank,@today_rank,@restless_str,@effort_str)
-            @twitter_anchor = makeTweetLink(@id,@name,@total)
+            @ogp_meta = makeOGPMeta(@player.id,@player.name,@player.total)
+            makeOGP(@player.id,@player.name,@player.scoreVR,@player.score2D,
+                    isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,
+                    @comment_VR,@comment_2D,@all_player_rank,@today_rank,@player.restless_str,@player.effort_str)
+            @twitter_anchor = makeTweetLink(@player.id,@player.name,@player.total)
 
             erb:index
         else
@@ -123,56 +90,49 @@ get '/result/:id' do
     end
 end
 
-get ['/recent', '/recent/'] do
-    @per_page = params[:per_page] || 10
-    @recent_players = Player.order('id DESC').paginate(:page => params[:page], :per_page => @per_page)
+get ['/recent', '/recent/', '/recent/:id'] do
+    params[:id] = 10 if params[:id].nil?
+    @recent_players = Player.order('updated_at DESC').limit(params[:id])
     erb:recent
 end
 
-get ['/ranking', '/ranking/'] do
-    @per_page = params[:per_page] || 10
-    @players = Player.order('total DESC').paginate(:page => params[:page], :per_page => @per_page)
+get ['/ranking', '/ranking/', '/ranking/:id'] do
+    params[:id] = 10 if params[:id].nil?
+    @players = Player.order('total DESC').limit(params[:id])
     erb:ranking
 end
 
 post '/qr' do
-    if params[:name].nil? || params[:scoreVR].nil? || params[:score2D].nil?
-        "指定されていないパラメータがあります" 
-    else
-        @name = params[:name]
-        @score_VR = params[:scoreVR].to_i
-        @score_2D = params[:score2D].to_i
-        @total = @score_VR + @score_2D
-        @result_VR = params[:isWinVR]
-        @result_2D = params[:isWin2D]
-        @chara_VR = params[:charaVR]
-        @chara_2D = params[:chara2D]
+    @name = params[:name]
+    @score_VR = params[:scoreVR].to_i
+    @score_2D = params[:score2D].to_i
+    @total = @score_VR + @score_2D
+    @result_VR = params[:isWinVR]
+    @result_2D = params[:isWin2D]
+    @chara_VR = params[:charaVR]
+    @chara_2D = params[:chara2D]
 
-        if @chara_2D == 'jasmin'
-            @chara_2D = 'jasmine'
-        end
+    @chara_2D = 'jasmine' if @chara_2D == 'jasmin'
 
-        evaluation(params[:moveCount].to_i, @total)
-        @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total, isWinVR: @result_VR,
-                             isWin2D: @result_2D, charaVR: @chara_VR, chara2D: @chara_2D, restlessStr: @restless_str, effortStr: @effort_str)
+    evaluation(params[:moveCount].to_i, @total)
+    @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total, isWinVR: @result_VR,
+                            isWin2D: @result_2D, charaVR: @chara_VR, chara2D: @chara_2D, restlessStr: @restless_str, effortStr: @effort_str)
+    begin
         @player.save
-        @url = url(@player.id)
-        qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
-        @qr = qr.to_img.resize(600,600)
-        @path = "public/qr/#{@player.id}.png"
-        @qr.save(@path)
-        # production環境でのみDropBoxにQRをアップロード
-        if settings.production?
-            file_content = IO.read(@path)
-            client.upload "/#{@player.id}.png", file_content, :mode => :overwrite
-            @link = client.create_shared_link_with_settings("/#{@player.id}.png")
-            @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
-            puts @qr_url
-            erb:qr2
-        else
-            erb:qr
-        end
+    rescue => error
+        return error
     end
+
+    @url = url(@player.id)
+    qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
+    @qr = qr.to_img.resize(600,600)
+    @qr.save("public/qr/#{@player.id}.png")
+    file_content = IO.read(@path)
+    client.upload "/#{@player.id}.png", file_content, :mode => :overwrite
+    @link = client.create_shared_link_with_settings("/#{@player.id}.png")
+    @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
+    puts @qr_url
+    erb:qr2
 end
 
 get '*' do
@@ -193,10 +153,9 @@ helpers do
     end
 
     def url(id)
-        "https://result-magiblo.herokuapp.com/result/" + id.to_s
-        #"localhost:4567/result/" + id.to_s
+        ENV['DEPLOY_URL'] + id.to_s
+        # "localhost:4567/result/" + id.to_s
     end
-
 
     def evaluation(move_count,total)
 
@@ -232,14 +191,15 @@ helpers do
 
     end
 
+
     def higherChara(player)
         return player.score2D >= player.scoreVR ? player.chara2D : player.charaVR
     end
 
     def isWin?(result)
-        if result.downcase == "win"
+        if result == "win"
             true
-        elsif result.downcase == "lose"
+        elsif result == "lose"
             false
         end
     end
