@@ -54,12 +54,12 @@
             <div class="overall">
                 <div class="score_and_ranking">
                     Score <%= @player.total %><br>
-                    当日ランキング　<%= @today_rank %>位<br>
-                    全体ランキング　<%= @all_player_rank %>位<br>
+                    当日ランキング　<%= @today_players_rank %>位<br>
+                    全体ランキング　<%= @all_players_rank %>位<br>
                 </div>
                 <div class="eval">
-                    落ち着きのなさ　<%= @player.restless_str %><br>
-                    頑張り度       <%= @player.effort_str %>
+                    落ち着きのなさ　<%= @player.restlessStr %><br>
+                    頑張り度       <%= @player.effortStr %>
                 </div>
                 <div class="last-message">
                     <%= @eval_messages %>

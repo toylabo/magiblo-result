@@ -48,8 +48,8 @@ get '/result/:id' do
                 JSON.load(io)
             end
             
-            @chara_VR_JPN = json_comments[@player.scoreVR]['nameJPN']
-            @chara_2D_JPN = json_comments[@player.score2D]['nameJPN']
+            @chara_VR_JPN = json_comments[@chara_VR]['name']
+            @chara_2D_JPN = json_comments[@chara_2D]['name']
 
             @comment_VR = json_comments[@chara_VR]['messages'][@result_VR]
             @comment_2D = json_comments[@chara_2D]['messages'][@result_2D]
@@ -73,12 +73,12 @@ get '/result/:id' do
                                          order('total DESC')
 
             @all_players_rank = Player.where("total > ?", @player.total).count + 1
-            @today_players_rank = @today_players.where("total > ?", @today_players.total).count + 1
+            @today_players_rank = @today_players.where("total > ?", @player.total).count + 1
 
             @ogp_meta = makeOGPMeta(@player.id,@player.name,@player.total)
             makeOGP(@player.id,@player.name,@player.scoreVR,@player.score2D,
                     isWin?(@result_VR),isWin?(@result_2D),@chara_VR,@chara_2D,
-                    @comment_VR,@comment_2D,@all_player_rank,@today_rank,@player.restless_str,@player.effort_str)
+                    @comment_VR,@comment_2D,@all_players_rank,@today_players_rank,@player.restlessStr,@player.effortStr)
             @twitter_anchor = makeTweetLink(@player.id,@player.name,@player.total)
 
             erb:index
@@ -91,14 +91,14 @@ get '/result/:id' do
 end
 
 get ['/recent', '/recent/', '/recent/:id'] do
-    params[:id] = 10 if params[:id].nil?
-    @recent_players = Player.order('updated_at DESC').limit(params[:id])
+    @per_page = params[:per_page] || 10
+    @recent_players = Player.order('id DESC').paginate(:page => params[:page], :per_page => @per_page)
     erb:recent
 end
 
 get ['/ranking', '/ranking/', '/ranking/:id'] do
-    params[:id] = 10 if params[:id].nil?
-    @players = Player.order('total DESC').limit(params[:id])
+    @per_page = params[:per_page] || 10
+    @players = Player.order('total DESC').paginate(:page => params[:page], :per_page => @per_page)
     erb:ranking
 end
 
