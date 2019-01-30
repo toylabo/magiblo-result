@@ -18,7 +18,7 @@
                 <div class="player">
                     <p><%= player.id %></p>
                     <p><%= player.name %></p>
-                    <%= link_to "結果", url(player.id)%>
+                    <%= link_to url(player.id), "結果"%>
                 </div>
             <% end %> 
             <%= will_paginate @recent_players %>

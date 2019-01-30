@@ -41,7 +41,7 @@ def makeOGP(id,name,scoreVR,score2D,isWinVR,isWin2D,charaVR,chara2D,messageVR,me
     font = "./fonts/rounded-mplus-1c-medium.ttf"
 
     draw = Magick::Draw.new
-    draw.annotate(frame,0,0,70,30, name) do
+    draw.annotate(frame,0,0,50,30, name) do
         self.font = font
         self.fill = 'white'
         self.stroke = 'transparent'
