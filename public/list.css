@@ -102,10 +102,6 @@ body {
   justify-content: space-around;
 }
 
-.player a{
-  color:white;
-}
-
 .player.first{
   background-color: #E40067;
 }
@@ -138,11 +134,18 @@ body {
   border: 3px solid white;
   border-radius: 30px;
   margin: 10%;
+  min-width: 200px;
 }
 
-.player .rank_and_chara .chara img{
+.chara_img{
   width: 200px;
   min-width:100%;
+}
+
+.chara_img.dahlia{
+  min-width: 0;
+  width: auto;
+  height: 180px;
 }
 
 .player .name_and_points{
@@ -193,14 +196,29 @@ body {
     font-size: 13px;
   }
 
+  .player .rank_and_chara{
+    margin: 0 5px;
+  }
+
   .player .rank_and_chara .rank img{
     width: 25px;
     height: 25px;
   }
 
-  .player .rank_and_chara .chara img{
+  .player .rank_and_chara .chara{
+    border-radius: 10px;
+    min-width: 70px;
+  }
+
+  .chara_img{
     max-width: 100%;
-  }  
+    min-width: 0;
+  }
+  
+  .chara_img.dahlia{
+    height: 70px;
+  }
+
 }
 @media screen and (max-width:330px) {
   *{
