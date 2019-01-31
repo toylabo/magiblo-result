@@ -15,6 +15,8 @@ require './twit'
 require 'RMagick'
 require 'will_paginate/view_helpers/sinatra'
 require 'will_paginate/active_record'
+require 'net/http'
+require 'uri'
 
 client = DropboxApi::Client.new
 
@@ -143,6 +145,8 @@ post '/qr' do
     @link = client.create_shared_link_with_settings("/#{@player.id}.png")
     @qr_url = @link.url.sub(/www.dropbox.com/, "dl.dropboxusercontent.com").sub(/\?dl=0/, "")
     puts @qr_url
+
+    Net::HTTP.post_form(URI.parse('https://hooks.slack.com/services/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'),{'text' => "【作成されたよ】\n#{@player.id}\n#{@url}"})
     erb:qr2
 end
 
