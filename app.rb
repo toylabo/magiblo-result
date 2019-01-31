@@ -13,7 +13,6 @@ require 'rack/contrib'
 require 'json'
 require './twit'
 require 'RMagick'
-require 'to-bool'
 require 'will_paginate/view_helpers/sinatra'
 require 'will_paginate/active_record'
 
@@ -116,10 +115,12 @@ post '/qr' do
     evaluation(params[:moveCount].to_i, @total)
     @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total, isWinVR: @result_VR,
                             isWin2D: @result_2D, charaVR: @chara_VR, chara2D: @chara_2D, restlessStr: @restless_str, effortStr: @effort_str)
+
     begin
         @player.save
     rescue => error
-        return error
+        puts @player
+        halt 400, "400 Bad Request!"
     end
 
     @url = url(@player.id)
@@ -135,7 +136,7 @@ post '/qr' do
 end
 
 get '*' do
-    return "404 Not Found"
+    halt 404, "404 Not Found!"
 end
 
 helpers do
