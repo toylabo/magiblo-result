@@ -13,7 +13,6 @@ require 'rack/contrib'
 require 'json'
 require './twit'
 require 'RMagick'
-require 'to-bool'
 require 'will_paginate/view_helpers/sinatra'
 require 'will_paginate/active_record'
 
@@ -120,7 +119,8 @@ post '/qr' do
     begin
         @player.save
     rescue => error
-        return error
+        puts @player
+        halt 400, "400 Bad Request"
     end
 
     @url = url(@player.id)
@@ -136,7 +136,7 @@ post '/qr' do
 end
 
 get '*' do
-    return "404 Not Found"
+    halt 400, "404 Not Found"
 end
 
 helpers do
