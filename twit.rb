@@ -66,7 +66,7 @@ def makeOGP(id,name,scoreVR,score2D,isWinVR,isWin2D,charaVR,chara2D,messageVR,me
     draw.annotate(frame,0,0,673,166,"Score #{score2D}\n結果 #{result2D}\nメッセージ\n   #{message2D}") do
         self.pointsize = 20
     end
-    draw.annotate(frame,0,0,173,320,"Score #{scoreVR + score2D}\n当日ランキング  #{todayRank}位\n鳳祭内ランキング  #{allPlayerRank}位\n\n落ち着きの無さ  #{restlessStr}\n頑張り度    #{effortStr}") do
+    draw.annotate(frame,0,0,173,320,"Score #{scoreVR + score2D}\n当日ランキング  #{todayRank}位\n全体ランキング  #{allPlayerRank}位\n\n落ち着きの無さ  #{restlessStr}\n頑張り度    #{effortStr}") do
         self.pointsize = 18
     end
 
