@@ -136,7 +136,8 @@ post '/qr' do
     @url = url(@player.id)
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
     @qr = qr.to_img.resize(600,600)
-    @qr.save("public/qr/#{@player.id}.png")
+    @path = "public/qr/#{@player.id}.png"
+    @qr.save(@path)
     file_content = IO.read(@path)
     client.upload "/#{@player.id}.png", file_content, :mode => :overwrite
     @link = client.create_shared_link_with_settings("/#{@player.id}.png")
