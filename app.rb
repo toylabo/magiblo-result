@@ -67,9 +67,8 @@ get '/result/:id' do
                 @eval_messages = json_eval[3]
             end
 
-            @today_players = Player.where(updated_at: Date.today.beginning_of_day.in_time_zone('UTC').to_time..
-                                         Date.today.end_of_day.in_time_zone('UTC').to_time).
-                                         order('total DESC')
+            @today_players = Player.where(updated_at: Date.today.beginning_of_day.in_time_zone(ENV['TZ']).to_time..
+                                          Date.today.end_of_day.in_time_zone(ENV['TZ']).to_time)
 
             @all_players_rank = Player.where("total > ?", @player.total).count + 1
             @today_players_rank = @today_players.where("total > ?", @player.total).count + 1
@@ -153,8 +152,7 @@ helpers do
     end
 
     def url(id)
-        ENV['DEPLOY_URL'] + id.to_s
-        # "localhost:4567/result/" + id.to_s
+        "#{ENV['DEPLOY_URL']}result/#{id}"
     end
 
     def evaluation(move_count,total)
@@ -191,6 +189,18 @@ helpers do
 
     end
 
+    def player_class(rank)
+        case @player_rank
+        when 1 then
+            @player_class = "first"
+        when 2 then
+            @player_class = "second"
+        when 3 then
+            @player_class = "third"
+        else
+            @player_class = ""
+        end
+    end
 
     def higherChara(player)
         return player.score2D >= player.scoreVR ? player.chara2D : player.charaVR

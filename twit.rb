@@ -3,18 +3,18 @@ require 'RMagick'
 
 def makeTweetLink(id,name,totalScore)
     tweetStr = "#{name}のスコアは【#{totalScore}】！%0a"
-    tweetUrl = "https://result-magiblo-dev.herokuapp.com/result/#{id}"
+    tweetUrl =  "#{ENV['DEPLOY_URL']}result/#{id}"
     insideAnchor = "<img src=\"../img/tweet.png\" alt=\"結果をツイートする\">"
     return "<a href=\"https://twitter.com/intent/tweet?text=#{tweetStr}&url=#{tweetUrl}&hashtags=マジブロ,toy_labo&related=toy_labo\" onClick=\"window.open(encodeURI(decodeURI(this.href)), 'tweetwindow', 'width=650, height=470, personalbar=0, toolbar=0, scrollbars=1, sizable=1'); return false;\" rel=\"nofollow\" class=\"twitter-link\">#{insideAnchor}</a>"        
 end
 
 def makeOGPMeta (id,name,total)
     "<meta property=\"og:title\" content=\"#{name}さんのマジブロリザルト\" />
-    <meta property=\"og:url\" content=\"http://result-magiblo-dev.herokuapp.com/result/#{id}\" />
-    <meta property=\"og:image\" content=\"http://result-magiblo-dev.herokuapp.com/#{id}.png\" />
+    <meta property=\"og:url\" content=\"#{ENV['DEPLOY_URL']}result/#{id}\" />
+    <meta property=\"og:image\" content=\"#{ENV['DEPLOY_URL']}#{id}.png\" />
     <meta property=\"og:site_name\" content=\"マジックブロック\" />
     <meta property=\"og:description\" content=\"#{name}さんの結果です！ #{total}点取りました！!\" />
-    <meta name=\"twitter:image:src\" content=\"http://result-magiblo-dev.herokuapp.com/#{id}.png\">"
+    <meta name=\"twitter:image:src\" content=\"#{ENV['DEPLOY_URL']}#{id}.png\">"
 end
 
 def makeOGP(id,name,scoreVR,score2D,isWinVR,isWin2D,charaVR,chara2D,messageVR,message2D,allPlayerRank,todayRank,restlessStr,effortStr)
