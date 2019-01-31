@@ -11,10 +11,10 @@ end
 def makeOGPMeta (id,name,total)
     "<meta property=\"og:title\" content=\"#{name}さんのマジブロリザルト\" />
     <meta property=\"og:url\" content=\"#{ENV['DEPLOY_URL']}result/#{id}\" />
-    <meta property=\"og:image\" content=\"#{ENV['DEPLOY_URL']}result/#{id}.png\" />
+    <meta property=\"og:image\" content=\"#{ENV['DEPLOY_URL']}#{id}.png\" />
     <meta property=\"og:site_name\" content=\"マジックブロック\" />
     <meta property=\"og:description\" content=\"#{name}さんの結果です！ #{total}点取りました！!\" />
-    <meta name=\"twitter:image:src\" content=\"#{ENV['DEPLOY_URL']}result/#{id}.png\">"
+    <meta name=\"twitter:image:src\" content=\"#{ENV['DEPLOY_URL']}#{id}.png\">"
 end
 
 def makeOGP(id,name,scoreVR,score2D,isWinVR,isWin2D,charaVR,chara2D,messageVR,message2D,allPlayerRank,todayRank,restlessStr,effortStr)
