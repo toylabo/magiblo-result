@@ -128,7 +128,7 @@ post '/qr' do
     puts ""
 
     begin
-        @player.save!
+        @player.save
     rescue ActiveModel::ValidationError => error
         halt 400, "400 Bad Request"
     end
