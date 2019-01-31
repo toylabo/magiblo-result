@@ -12,8 +12,8 @@ class Player < ActiveRecord::Base
     validates :name, presence: true
     validates :scoreVR, presence: true
     validates :score2D, presence: true
-    validates :resultVR, presence: true
-    validates :result2D, presence: true
+    validates :isWinVR, presence: true
+    validates :isWin2D, presence: true
     validates :charaVR, presence: true
     validates :chara2D, presence: true
 end

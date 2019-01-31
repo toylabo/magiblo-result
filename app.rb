@@ -127,9 +127,6 @@ post '/qr' do
     puts "moveCount: #{params[:moveCount]}"
     puts ""
 
-    puts "@player"
-    puts @player
-
     begin
         @player.save
     rescue ActiveModel::ValidationError => error
