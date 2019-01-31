@@ -115,10 +115,24 @@ post '/qr' do
     evaluation(params[:moveCount].to_i, @total)
     @player = Player.new(name: @name, scoreVR: @score_VR, score2D: @score_2D, total: @total, isWinVR: @result_VR,
                             isWin2D: @result_2D, charaVR: @chara_VR, chara2D: @chara_2D, restlessStr: @restless_str, effortStr: @effort_str)
+    
+    puts "送られてきたやつ"
+    puts "name: #{params[:name]}"
+    puts "scoreVR: #{params[:scoreVR]}"
+    puts "score2D: #{params[:score2D]}"
+    puts "isWinVR: #{params[:isWinVR]}"
+    puts "isWin2D: #{params[:isWin2D]}"
+    puts "charaVR: #{params[:charaVR]}"
+    puts "chara2D: #{params[:chara2D]}"
+    puts "moveCount: #{params[:moveCount]}"
+    puts ""
+
+    puts "@player"
+    puts @player
+
     begin
         @player.save
     rescue => error
-        puts @player
         halt 400, "400 Bad Request"
     end
 
