@@ -98,30 +98,25 @@ div.result {
   border: 3px solid #ffffff;
 }
 
-div.result.vr:before {
+div.result:before {
   position: absolute;
   display: block;
-  content: "VR";
   padding: 0.5em 1.5em;
   top: -20px;
   left: -20px;
-  background-color: #36b4c7;
   border-radius: 15px;
   border: 3px solid #ffffff;
   font-size: 36px;
 }
 
+div.result.vr:before {
+  content: "VR";
+  background-color: #36b4c7;
+}
+
 div.result.two-dim:before {
-  position: absolute;
-  display: block;
   content: "2D";
-  padding: 0.5em 1.5em;
-  top: -20px;
-  left: -20px;
   background-color: #e40067;
-  border-radius: 15px;
-  border: 3px solid #ffffff;
-  font-size: 36px;
 }
 
 div.img-container {
@@ -179,6 +174,12 @@ div.overall:before {
   width: auto;
   height: 120%;
 }
+
+.img-container img.dahlia {
+  height: 100%;
+  left: -5%;
+}
+
 .button {
   display: block;
   padding: 0.5em 2em;
@@ -218,6 +219,10 @@ a.twitter-link {
 }
 
 @media screen and (max-width: 980px) {
+  html,body,#header,#main,#contents{
+    min-width: 300px;
+  }
+
   #contents {
     width: 90%;
   }
@@ -243,24 +248,60 @@ a.twitter-link {
     left: -95px !important;
   }
   div.name {
-    display: inline-block;
     padding: 0.3em 0.7em;
     margin-right: 0.5em;
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 15px;
-    border: 3px solid #ffffff;
-    font-size: 30px;
+    font-size: 15px;
   }
   p.chara-name {
     position: absolute;
     bottom: -2%;
     font-weight: 900;
-    font-size: 30px;
+    font-size: 15px;
     -webkit-text-stroke: 3px #3a3839;
   }
 
   .twitter-link img {
     width: 40vw;
     height: auto;
+  }
+
+  div.result {
+    width: 80%;
+    margin: 4vh 0;
+  }
+
+  div.result:before {
+      font-size: 20px;
+  }
+
+  div.img-container {
+    width: 20%;
+    height: 100px;
+  }
+
+  .img-container img {
+    left: -40% !important;
+  }
+
+  .img-container img.dahlia {
+    height: 100%;
+    left: -10% !important;
+  }
+
+  * {
+    font-size: 10px;
+  }
+
+  div.overall {
+    padding: 2em 2em;
+    padding-top: 4.5em !important;
+    margin: 40px 0;
+    width: calc(80% - 4em);
+  }
+  div.overall:before {
+    padding: 0.5em 1.5em;
+    top: -20px;
+    left: -20px;
+    font-size: 20px;
   }
 }
