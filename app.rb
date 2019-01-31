@@ -215,7 +215,7 @@ helpers do
     end
 
     def higherChara(player)
-        return player.score2D >= player.scoreVR ? player.chara2D : player.charaVR
+        return player.score2D >= player.scoreVR ? player.chara2D.downcase : player.charaVR.downcase
     end
 
     def isWin?(result)
