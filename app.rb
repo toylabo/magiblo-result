@@ -67,8 +67,8 @@ get '/result/:id' do
                 @eval_messages = json_eval[3]
             end
 
-            @today_players = Player.where(updated_at: Date.today.beginning_of_day.in_time_zone(ENV['TZ']).to_time..
-                                          Date.today.end_of_day.in_time_zone(ENV['TZ']).to_time)
+            @today_players = Player.where(updated_at: @player.updated_at.beginning_of_day.in_time_zone(ENV['TZ']).to_time..
+                                          @player.updated_at.end_of_day.in_time_zone(ENV['TZ']).to_time)
 
             @all_players_rank = Player.where("total > ?", @player.total).count + 1
             @today_players_rank = @today_players.where("total > ?", @player.total).count + 1
