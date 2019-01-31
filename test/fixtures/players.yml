@@ -16,7 +16,7 @@ player_<%= n %>:
 <% end %>
 
 dahlia:
-  id: 51
+  id: 50
   name: "ダリアのオタク"
   score2D: 4000
   scoreVR: 1000
@@ -29,3 +29,20 @@ dahlia:
   chara2D: "dahlia"
   restlessStr: "★★★☆☆"
   effortStr: "★★☆☆☆"
+
+<% (51..54).each do |n| %>
+player_<%= n %>:
+  id: <%= n %>
+  name: <%= "player#{n}" %>
+  scoreVR: 800
+  score2D: 4200
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+  total: 5000
+  isWinVR: "lose"
+  isWin2D: "win"
+  charaVR: <%= n % 2 == 0 ? "ant" : "moff" %>
+  chara2D: <%= n % 2 == 0 ? "peta" : "jasmine" %>
+  restlessStr: "★★★☆☆"
+  effortStr: "★★☆☆☆"
+<% end %>

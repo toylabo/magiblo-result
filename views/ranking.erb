@@ -8,13 +8,13 @@
     <title>ranking</title>
     <% if (params[:page].nil? || params[:page] == 1.to_s)%>
     <style>
-        .player:nth-of-type(2){
+        .player.first{
             background-color: #E40067;
         }
-        .player:nth-of-type(3){
+        .player.second{
             background-color: #36B4C7;
         }
-        .player:nth-of-type(4){
+        .player.third{
             background-color: #C4CA00;
         }
     </style>
@@ -29,7 +29,7 @@
             <%= will_paginate @players %>
             <% @players.each do |player| %>
                 <% @player_rank = Player.where("total > ?", player.total).count + 1 %>
-                <div class="player">
+                <div class="player <%= player_class(@player_rank) %>">
                     <div class="rank_and_chara">
                         <div class="rank">
                             <%= image_tag("/img/crown.png",) if @player_rank <= 3 %>
