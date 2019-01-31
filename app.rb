@@ -133,6 +133,8 @@ post '/qr' do
         halt 400, "400 Bad Request"
     end
 
+    puts "#{@player.errors}"
+
     @url = url(@player.id)
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
     @qr = qr.to_img.resize(600,600)
