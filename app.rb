@@ -128,12 +128,10 @@ post '/qr' do
     puts ""
 
     begin
-        @player.save
+        @player.save!
     rescue ActiveModel::ValidationError => error
         halt 400, "400 Bad Request"
     end
-
-    puts "#{@player.errors}"
 
     @url = url(@player.id)
     qr = RQRCode::QRCode.new(@url, :size => 7, :level => :m)
