@@ -191,6 +191,18 @@ helpers do
 
     end
 
+    def player_class(rank)
+        case @player_rank
+        when 1 then
+            @player_class = "first"
+        when 2 then
+            @player_class = "second"
+        when 3 then
+            @player_class = "third"
+        else
+            @player_class = ""
+        end
+    end
 
     def higherChara(player)
         return player.score2D >= player.scoreVR ? player.chara2D : player.charaVR
