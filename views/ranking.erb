@@ -26,7 +26,7 @@
             <img src="../img/logo.png" alt="magicBlock">
         </div>
         <div id="contents">    
-            <%= will_paginate @players, inner_window: 1 %>
+            <%= will_paginate @players, inner_window: 1, outer_window: 0 %>
             <% @players.each do |player| %>
                 <% @player_rank = Player.where("total > ?", player.total).count + 1 %>
                 <div class="player <%= player_class(@player_rank) %>">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             <% end %>
-            <%= will_paginate @players, inner_window: 1 %>
+            <%= will_paginate @players, inner_window: 1, outer_window: 0 %>
         </div>
         <div id="footer">
             <p>©2018~2019 おもちゃLABO</p>
