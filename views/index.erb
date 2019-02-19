@@ -65,7 +65,8 @@
                     <%= @eval_messages %>
                 </div>
             </div>
-            <a class="button" href="<%= "#{ENV['DEPLOY_URL']}ranking" %>">全体のランキングをみる</a>
+                <a class="button" href="<%= "#{ENV['DEPLOY_URL']}ranking/date/#{@player.updated_at.in_time_zone('Asia/Tokyo').strftime("%Y-%m-%d")}"%>">当日ランキングを見る</a>
+                <a class="button" href="<%= "#{ENV['DEPLOY_URL']}ranking" %>">全体のランキングをみる</a>
             <a class="button" href="https://docs.google.com/forms/d/1yfyjWS_FmrqwuMyfSkZas66PdzQgC_KptNKNp-0lNsc/viewform?edit_requested=true">アンケート</a>
             <div id="enquete">
                 アンケートにご協力ください。

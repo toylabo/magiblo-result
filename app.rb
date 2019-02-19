@@ -102,6 +102,17 @@ get ['/ranking', '/ranking/', '/ranking/:id'] do
     erb:ranking
 end
 
+get ['/ranking/date/','/ranking/date/:date'] do
+    @per_page = params[:per_page] || 10
+    begin
+        @day = params[:date].nil? ? Date.today : params[:date].to_date
+        @players = Player.where(updated_at: @day.in_time_zone('Asia/Tokyo').all_day).reverse_order.paginate(:page => params[:page], :per_page => @per_page)
+    rescue => e
+        halt 400, "不正な値が入力されました"
+    end
+    erb:today_ranking
+end
+
 post '/qr' do
     @name = params[:name]
     @score_VR = params[:scoreVR].to_i

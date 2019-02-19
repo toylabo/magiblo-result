@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/list.css">
+    <title>ranking</title>
+    <% if (params[:page].nil? || params[:page] == 1.to_s)%>
+    <style>
+        .player.first{
+            background-color: #E40067;
+        }
+        .player.second{
+            background-color: #36B4C7;
+        }
+        .player.third{
+            background-color: #C4CA00;
+        }
+    </style>
+    <% end %>
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <img src="/img/logo.png" alt="magicBlock">
+        </div>
+        <div id="contents">    
+            <%= will_paginate @players, inner_window: 1, outer_window: 0 %>
+            <% @players.each do |player| %>
+                <% @player_rank = @players.where("total > ?", player.total).count + 1 %>
+                <div class="player <%= player_class(@player_rank) %>">
+                    <div class="rank_and_chara">
+                        <div class="rank">
+                            <%= image_tag("/img/crown.png",) if @player_rank <= 3 %>
+                            <p><%= @player_rank %>位</p>
+                        </div>
+                        <div class="chara">
+                            <img src="/img/<%= higherChara(player) %>.png" alt="<%= higherChara(player) %>" class="chara_img <%= higherChara(player) %>" >
+                        </div>
+                    </div>
+                    <div class="name_and_points">
+                        <p><%= player.name %>さん</p>
+                        <div class = "points_and_link">
+                            <p class="points"><%= player.total %>点</p>
+                            <%= link_to(url(player.id), "結果", class:"link") %>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+            <%= will_paginate @players, inner_window: 1, outer_window: 0 %>
+        </div>
+        <div id="footer">
+            <p>©2018~2019 おもちゃLABO</p>
+        </div>
+    </div>
+
+</body>
+</html>
