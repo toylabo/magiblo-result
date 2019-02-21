@@ -69,6 +69,13 @@ body {
   height: auto;
 }
 
+h1 {
+  padding: 0.5em 1em;
+  background-color: #3a3839;
+  border: 3px solid white;
+  border-radius: 20px;
+}
+
 .pagination {
   align-self: flex-start;
   margin: 2em 0;

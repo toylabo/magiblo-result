@@ -45,6 +45,7 @@
                             <p class="points"><%= player.total %>点</p>
                             <%= link_to(url(player.id), "結果", class:"link") %>
                         </div>
+                        <%= "プレイ日: #{player.updated_at.in_time_zone('Asia/Tokyo').strftime("%Y/%m/%d")}" %>
                     </div>
                 </div>
             <% end %>
